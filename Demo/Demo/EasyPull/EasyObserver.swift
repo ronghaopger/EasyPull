@@ -9,16 +9,25 @@
 import UIKit
 
 public enum EasyState {
-    case DropPulling
+    case DropPulling(CGFloat)
     case DropPullingOver
-    case UpPulling
+    case UpPulling(CGFloat)
     case UpPullingOver
     case Excuting
     case Free
 }
 
-public class DefaultView: UIView {
+public protocol EasyViewable {
+    func showPulling(progress:CGFloat)
+    func showPullingOver()
+}
+
+public class DefaultView: UIView, EasyViewable {
     // MARK: - constant and veriable and property
+    let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
+    let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
+    
+    let titleLabel:UILabel = UILabel()
     
     // MARK: - life cycle
     override init(frame: CGRect) {
@@ -31,10 +40,23 @@ public class DefaultView: UIView {
     }
     
     // MARK: - public method
+    public func showPulling(progress:CGFloat) {
+        self.backgroundColor = UIColor.greenColor()
+        titleLabel.text = "下拉刷新"
+        NSLog("%f", progress)
+    }
+    
+    public func showPullingOver() {
+        self.backgroundColor = UIColor.redColor()
+        titleLabel.text = "放开即可刷新"
+    }
     
     // MARK: - private method
     private func initView() {
-        
+        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5, self.frame.size.height * 0.5 - 10, 100, 20)
+        titleLabel.font = UIFont.systemFontOfSize(14.0)
+        titleLabel.textColor = UIColor.blackColor()
+        self.addSubview(titleLabel)
     }
 }
 
@@ -46,6 +68,7 @@ public class EasyObserver: NSObject {
     public var scrollView: UIScrollView = UIScrollView()
     public var dropViewHeight: CGFloat = 60.0
     public var upViewHeight: CGFloat = 60.0
+    private var dropView: DefaultView?
     
     private var state: EasyState = .Free
     public var State: EasyState {
@@ -53,8 +76,13 @@ public class EasyObserver: NSObject {
             return state
         }
         set {
-            if state != newValue {
-                state = newValue
+            state = newValue
+            switch state {
+            case .DropPulling(let progress):
+                dropView!.showPulling(progress)
+            case .DropPullingOver:
+                dropView!.showPullingOver()
+            default: break
             }
         }
     }
@@ -64,9 +92,9 @@ public class EasyObserver: NSObject {
         super.init()
         
         self.scrollView = scrollView
-        let dropView = DefaultView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
-        dropView.backgroundColor = UIColor.yellowColor()
-        self.scrollView.addSubview(dropView)
+        dropView = DefaultView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
+        dropView!.backgroundColor = UIColor.yellowColor()
+        self.scrollView.addSubview(dropView!)
         
 //        let pullupView = UIView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
 //        pullupView.backgroundColor = UIColor.redColor()
@@ -80,21 +108,19 @@ public class EasyObserver: NSObject {
             if self.scrollView.contentSize.height >= self.scrollView.frame.size.height
                 && yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height >= upViewHeight {
                     State = .UpPullingOver
-                    NSLog("up pulling over")
             }
             else if self.scrollView.contentSize.height >= self.scrollView.frame.size.height
                 && yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height > 0
                 && yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height < upViewHeight {
-                    State = .UpPulling
-                    NSLog("up pulling")
+                    let progress: CGFloat = (yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height) / upViewHeight
+                    State = .UpPulling(progress)
             }
             else if yOffset <= -dropViewHeight {
                 State = .DropPullingOver
-                NSLog("drop pulling over")
             }
             else if yOffset < 0 && yOffset > -dropViewHeight {
-                State = .DropPulling
-                NSLog("drop pulling")
+                let progress = -yOffset / dropViewHeight
+                State = .DropPulling(progress)
             }
         }
     }
