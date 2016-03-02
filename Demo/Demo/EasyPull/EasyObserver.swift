@@ -60,7 +60,7 @@ public class DefaultView: UIView, EasyViewable {
     }
 }
 
-public class EasyObserver: NSObject {
+public class EasyObserver: NSObject, UIScrollViewDelegate {
     // MARK: - constant and veriable and property
     let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
     let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
@@ -92,6 +92,7 @@ public class EasyObserver: NSObject {
         super.init()
         
         self.scrollView = scrollView
+        self.scrollView.delegate = self
         dropView = DefaultView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
         dropView!.backgroundColor = UIColor.yellowColor()
         self.scrollView.addSubview(dropView!)
@@ -122,6 +123,17 @@ public class EasyObserver: NSObject {
                 let progress = -yOffset / dropViewHeight
                 State = .DropPulling(progress)
             }
+        }
+    }
+
+// MARK: - UIScrollViewDelegate
+    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        switch State {
+        case .DropPullingOver:
+            self.scrollView.contentInset = UIEdgeInsets(top: dropViewHeight, left: 0, bottom: 0, right: 0)
+        case .UpPullingOver:
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: upViewHeight + self.scrollView.contentSize.height - self.scrollView.frame.size.height), animated: false)
+        default: break
         }
     }
 }
