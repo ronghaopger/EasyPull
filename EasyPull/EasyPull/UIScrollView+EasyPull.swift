@@ -14,9 +14,14 @@ extension UIScrollView {
         static var ContentOffsetObserver = "easy_ContentOffsetObserver"
     }
 // MARK: - constant and veriable and property
-    private var observer: NSObject {
+    private var observer: EasyObserver {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver) as! NSObject
+            var obj = objc_getAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver) as? EasyObserver
+            if obj == nil {
+                obj = EasyObserver(scrollView: self)
+                objc_setAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver, obj, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+            return obj!
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -25,15 +30,22 @@ extension UIScrollView {
     
 // MARK: - public method
     public func easy_addDropPull(action:() ->Void) {
-        self.observer = EasyObserver(scrollView: self)
+        self.observer.dropAction = action
         self.addObserver(self.observer, forKeyPath: "contentOffset", options: .New, context: nil)
     }
     
-    public func easy_addUpPull(action:() ->Void) {
+    public func easy_stopDropPull() {
+        self.observer.stopExcuting()
+    }
+    
+    public func easy_addUpPull(action:() ->Void, style:EasyUpPullStyle) {
+        self.observer.upPullStyle = style
+        self.observer.upAction = action
         self.addObserver(self.observer, forKeyPath: "contentOffset", options: .New, context: nil)
     }
     
-    public func easy_addLoadMore(action:() ->Void) {
-        
+    public func easy_stopUpPull() {
+        self.observer.stopExcuting()
     }
+    
 }

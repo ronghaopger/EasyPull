@@ -11,15 +11,22 @@ import UIKit
 public enum EasyState {
     case DropPulling(CGFloat)
     case DropPullingOver
+    case DropPullingExcuting
     case UpPulling(CGFloat)
     case UpPullingOver
-    case Excuting
+    case UpPullingExcuting
     case Free
+}
+
+public enum EasyUpPullStyle {
+    case UpPullAutomatic
+    case UpPullManual
 }
 
 public protocol EasyViewable {
     func showPulling(progress:CGFloat)
     func showPullingOver()
+    func showExcuting()
 }
 
 public class DefaultView: UIView, EasyViewable {
@@ -51,6 +58,11 @@ public class DefaultView: UIView, EasyViewable {
         titleLabel.text = "放开即可刷新"
     }
     
+    public func showExcuting() {
+        self.backgroundColor = UIColor.blueColor()
+        titleLabel.text = "正在刷新"
+    }
+    
     // MARK: - private method
     private func initView() {
         titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5, self.frame.size.height * 0.5 - 10, 100, 20)
@@ -61,14 +73,19 @@ public class DefaultView: UIView, EasyViewable {
 }
 
 public class EasyObserver: NSObject, UIScrollViewDelegate {
-    // MARK: - constant and veriable and property
+// MARK: - constant and veriable and property
     let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
     let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
     
-    public var scrollView: UIScrollView = UIScrollView()
+    private var scrollView: UIScrollView = UIScrollView()
+    private var dropView: DefaultView?
+    private var upView: DefaultView?
+    
     public var dropViewHeight: CGFloat = 60.0
     public var upViewHeight: CGFloat = 60.0
-    private var dropView: DefaultView?
+    public var upPullStyle: EasyUpPullStyle = .UpPullAutomatic
+    public var dropAction: (() ->Void)?
+    public var upAction: (() ->Void)?
     
     private var state: EasyState = .Free
     public var State: EasyState {
@@ -82,28 +99,48 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 dropView!.showPulling(progress)
             case .DropPullingOver:
                 dropView!.showPullingOver()
-            default: break
+            case .DropPullingExcuting:
+                dropView!.showExcuting()
+                self.scrollView.contentInset = UIEdgeInsets(top: dropViewHeight, left: 0, bottom: 0, right: 0)
+                dropAction?()
+            case .UpPulling(let progress):
+                self.initUpView()
+                upView!.showPulling(progress)
+            case .UpPullingOver:
+                upView!.showPullingOver()
+            case .UpPullingExcuting:
+                upView!.showExcuting()
+                self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
+                upAction?()
+            case .Free:
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                })
             }
         }
     }
     
-    // MARK: - life cycle
+// MARK: - life cycle
     init(scrollView:UIScrollView) {
         super.init()
         
         self.scrollView = scrollView
         self.scrollView.delegate = self
-        dropView = DefaultView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
-        dropView!.backgroundColor = UIColor.yellowColor()
-        self.scrollView.addSubview(dropView!)
-        
-//        let pullupView = UIView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
-//        pullupView.backgroundColor = UIColor.redColor()
-//        self.scrollView.addSubview(pullupView)
+
+        self.initDropView()
     }
     
+// MARK: - observer
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "contentOffset" {
+            switch State {
+            case .UpPullingExcuting:
+                return
+            case .DropPullingExcuting:
+                return
+            default: break
+            }
+            
             let newPoint = change![NSKeyValueChangeNewKey]?.CGPointValue
             let yOffset = newPoint?.y == nil ? 0 : (newPoint?.y)!
             if self.scrollView.contentSize.height >= self.scrollView.frame.size.height
@@ -130,10 +167,36 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         switch State {
         case .DropPullingOver:
-            self.scrollView.contentInset = UIEdgeInsets(top: dropViewHeight, left: 0, bottom: 0, right: 0)
+            State = .DropPullingExcuting
         case .UpPullingOver:
-            self.scrollView.setContentOffset(CGPoint(x: 0, y: upViewHeight + self.scrollView.contentSize.height - self.scrollView.frame.size.height), animated: false)
+            State = .UpPullingExcuting
         default: break
         }
+    }
+    
+// MARK: - private method
+    private func initDropView() {
+        dropView = DefaultView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
+        dropView!.backgroundColor = UIColor.yellowColor()
+        self.scrollView.addSubview(dropView!)
+    }
+    
+    private func initUpView() {
+        if upView == nil {
+            upView = DefaultView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
+            upView!.backgroundColor = UIColor.redColor()
+        }
+        if upView!.superview == nil {
+            upView!.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
+            self.scrollView.addSubview(upView!)
+        }
+        if upPullStyle == .UpPullAutomatic {
+            self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
+        }
+    }
+    
+// MARK: - public method
+    public func stopExcuting() {
+        State = .Free
     }
 }

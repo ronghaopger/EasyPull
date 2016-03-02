@@ -19,9 +19,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let tableView = UITableView(frame: CGRectMake(0, 0, kMainBoundsWidth, kMainBoundsHeight))
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.easy_addDropPull({})
-        tableView.easy_addUpPull({})
+        tableView.easy_addDropPull({
+            NSLog("执行啦")
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+                tableView.easy_stopDropPull()
+            })
+        })
+        tableView.easy_addUpPull({
+            NSLog("执行啦")
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+                tableView.easy_stopUpPull()
+            })
+            }, style: EasyUpPullStyle.UpPullManual)
         self.view.addSubview(tableView)
+        
     }
 
     override func didReceiveMemoryWarning() {
