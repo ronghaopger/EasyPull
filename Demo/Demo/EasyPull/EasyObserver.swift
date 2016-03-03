@@ -35,20 +35,51 @@ public protocol EasyViewAutomatic {
     func resetAutomatic()
 }
 
+
 public class EasyObserver: NSObject, UIScrollViewDelegate {
+    
 // MARK: - constant and veriable and property
     let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
     let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
     
     private var scrollView: UIScrollView = UIScrollView()
-    private var dropView: DefaultDropView?
-    private var upView: DefaultUpView?
     
     public var dropViewHeight: CGFloat = 60.0
     public var upViewHeight: CGFloat = 60.0
     public var upPullStyle: EasyUpPullStyle = .UpPullAutomatic
     public var dropAction: (() ->Void)?
     public var upAction: (() ->Void)?
+    
+    private var dropView: DefaultDropView?
+    public var DropView: DefaultDropView {
+        get {
+            if dropView == nil {
+                dropView = DefaultDropView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
+                self.scrollView.addSubview(dropView!)
+            }
+            return dropView!
+        }
+        set {
+            dropView = newValue
+        }
+    }
+    
+    private var upView: DefaultUpView?
+    public var UpView: DefaultUpView {
+        get {
+            if upView == nil {
+                upView = DefaultUpView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
+            }
+            if upView!.superview == nil {
+                self.scrollView.addSubview(upView!)
+            }
+            upView!.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
+            return upView!
+        }
+        set {
+            upView = newValue
+        }
+    }
     
     private var state: EasyState = .Free
     public var State: EasyState {
@@ -59,34 +90,36 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             state = newValue
             switch state {
             case .DropPulling(let progress):
-                dropView!.showManualPulling(progress)
+                DropView.showManualPulling(progress)
             case .DropPullingOver:
-                dropView!.showManualPullingOver()
+                DropView.showManualPullingOver()
             case .DropPullingExcuting:
-                dropView!.showManualExcuting()
+                DropView.showManualExcuting()
                 self.scrollView.contentInset = UIEdgeInsets(top: dropViewHeight, left: 0, bottom: 0, right: 0)
                 dropAction?()
             case .UpPulling(let progress):
-                self.initUpView()
-                upPullStyle == .UpPullManual ? upView!.showManualPulling(progress) : ()
+                if upPullStyle == .UpPullAutomatic {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
+                }
+                upPullStyle == .UpPullManual ? UpView.showManualPulling(progress) : ()
             case .UpPullingOver:
                 if upPullStyle == .UpPullManual {
-                    upView!.showManualPullingOver()
+                    UpView.showManualPullingOver()
                 }
                 else {
-                    upView?.showAutomaticExcuting()
+                    UpView.showAutomaticExcuting()
                     upAction?()
                 }
             case .UpPullingExcuting:
                 if upPullStyle == .UpPullManual {
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
-                    upView!.showManualExcuting()
+                    UpView.showManualExcuting()
                     upAction?()
                 }
             case .Free:
-                dropView?.resetManual()
-                upPullStyle == .UpPullAutomatic ? upView?.resetAutomatic() : upView?.resetManual()
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                DropView.resetManual()
+                upPullStyle == .UpPullAutomatic ? UpView.resetAutomatic() : UpView.resetManual()
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 })
             }
@@ -94,13 +127,11 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     }
     
 // MARK: - life cycle
-    init(scrollView:UIScrollView) {
+    init(scrollView: UIScrollView) {
         super.init()
         
         self.scrollView = scrollView
         self.scrollView.delegate = self
-
-        self.initDropView()
     }
     
 // MARK: - observer
@@ -116,22 +147,25 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             
             let newPoint = change![NSKeyValueChangeNewKey]?.CGPointValue
             let yOffset = newPoint?.y == nil ? 0 : (newPoint?.y)!
-            if self.scrollView.contentSize.height >= self.scrollView.frame.size.height
-                && yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height >= upViewHeight {
+            let frameHeight = self.scrollView.frame.size.height
+            let contentHeight = self.scrollView.contentSize.height
+            let pullLength = yOffset + frameHeight - contentHeight
+            if contentHeight >= frameHeight
+                && pullLength >= upViewHeight
+            {
                     State = .UpPullingOver
             }
-            else if self.scrollView.contentSize.height >= self.scrollView.frame.size.height
-                && yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height > 0
-                && yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height < upViewHeight {
-                    let progress: CGFloat = (yOffset + self.scrollView.frame.size.height - self.scrollView.contentSize.height) / upViewHeight
-                    State = .UpPulling(progress)
+            else if contentHeight >= frameHeight
+                && pullLength > 0
+                && pullLength < upViewHeight
+            {
+                    State = .UpPulling(pullLength / upViewHeight)
             }
             else if yOffset <= -dropViewHeight {
                 State = .DropPullingOver
             }
             else if yOffset < 0 && yOffset > -dropViewHeight {
-                let progress = -yOffset / dropViewHeight
-                State = .DropPulling(progress)
+                State = .DropPulling(-yOffset / dropViewHeight)
             }
         }
     }
@@ -148,23 +182,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     }
     
 // MARK: - private method
-    private func initDropView() {
-        dropView = DefaultDropView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
-        self.scrollView.addSubview(dropView!)
-    }
-    
-    private func initUpView() {
-        if upView == nil {
-            upView = DefaultUpView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
-        }
-        if upView!.superview == nil {
-            self.scrollView.addSubview(upView!)
-        }
-        upView!.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
-        if upPullStyle == .UpPullAutomatic {
-            self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
-        }
-    }
+
     
 // MARK: - public method
     public func stopExcuting() {

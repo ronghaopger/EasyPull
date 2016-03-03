@@ -29,7 +29,7 @@ extension UIScrollView {
     }
     
 // MARK: - public method
-    public func easy_addDropPull(action:() ->Void) {
+    public func easy_addDropPull(action: () ->Void) {
         self.observer.dropAction = action
         self.addObserver(self.observer, forKeyPath: "contentOffset", options: .New, context: nil)
     }
@@ -38,7 +38,7 @@ extension UIScrollView {
         self.observer.stopExcuting()
     }
     
-    public func easy_addUpPull(action:() ->Void, style:EasyUpPullStyle) {
+    public func easy_addUpPull(action: () ->Void, style: EasyUpPullStyle) {
         self.observer.upPullStyle = style
         self.observer.upAction = action
         self.addObserver(self.observer, forKeyPath: "contentOffset", options: .New, context: nil)

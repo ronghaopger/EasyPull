@@ -29,12 +29,16 @@ public class DefaultDropView: UIView, EasyViewManual {
     
     // MARK: - public method
     public func showManualPulling(progress:CGFloat) {
+        indicatorView.hidden = true
         titleLabel.text = "下拉刷新..."
         NSLog("%f", progress)
     }
     
     public func showManualPullingOver() {
         titleLabel.text = "松开刷新..."
+        UIView.animateWithDuration(0.5) { () -> Void in
+            self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
+        }
     }
     
     public func showManualExcuting() {
@@ -47,21 +51,21 @@ public class DefaultDropView: UIView, EasyViewManual {
         arrowImage.hidden = false
         indicatorView.hidden = true
         titleLabel.text = ""
+        arrowImage.transform = CGAffineTransformMakeRotation(0);
     }
     
     // MARK: - private method
     private func initView() {
         self.backgroundColor = UIColor.whiteColor()
         
-        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 15, self.frame.size.height * 0.5 - 10, 10, 13)
+        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 35, self.frame.size.height * 0.5 - 10, 10, 13)
         self.addSubview(arrowImage)
         
-        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 15, self.frame.size.height * 0.5 - 10, 10, 13)
+        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 35, self.frame.size.height * 0.5 - 10, 10, 13)
         indicatorView.startAnimating()
-        indicatorView.hidden = true
         self.addSubview(indicatorView)
         
-        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 + 5, self.frame.size.height * 0.5 - 10, 100, 20)
+        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 15, self.frame.size.height * 0.5 - 10, 100, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
         self.addSubview(titleLabel)
@@ -90,12 +94,16 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - public method
     public func showManualPulling(progress:CGFloat) {
         arrowImage.hidden = false
+        indicatorView.hidden = true
         titleLabel.text = "上拉加载更多..."
         NSLog("%f", progress)
     }
     
     public func showManualPullingOver() {
         titleLabel.text = "松开即可加载..."
+        UIView.animateWithDuration(0.5) { () -> Void in
+            self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 2));
+        }
     }
     
     public func showManualExcuting() {
@@ -108,6 +116,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
         arrowImage.hidden = false
         indicatorView.hidden = true
         titleLabel.text = ""
+        arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
     }
     
     public func showAutomaticExcuting() {
@@ -125,16 +134,16 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     private func initView() {
         self.backgroundColor = UIColor.whiteColor()
         
-        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 15, self.frame.size.height * 0.5 - 10, 10, 13)
+        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 35, self.frame.size.height * 0.5 - 10, 10, 13)
         arrowImage.hidden = true
+        arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
         self.addSubview(arrowImage)
         
-        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 15, self.frame.size.height * 0.5 - 10, 10, 13)
+        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 35, self.frame.size.height * 0.5 - 10, 10, 13)
         indicatorView.startAnimating()
-        indicatorView.hidden = true
         self.addSubview(indicatorView)
         
-        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 + 5, self.frame.size.height * 0.5 - 10, 100, 20)
+        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 15, self.frame.size.height * 0.5 - 10, 100, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
         self.addSubview(titleLabel)
