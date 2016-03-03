@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		145141D81C87E3A000969E54 /* DefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145141D71C87E3A000969E54 /* DefaultView.swift */; };
+		145141E41C882FB000969E54 /* icon_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 145141E11C882FB000969E54 /* icon_arrow.png */; };
+		145141E51C882FB000969E54 /* icon_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 145141E21C882FB000969E54 /* icon_arrow@2x.png */; };
+		145141E61C882FB000969E54 /* icon_arrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 145141E31C882FB000969E54 /* icon_arrow@3x.png */; };
 		1454C8B01C7B097C00BDCC66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1454C8AF1C7B097C00BDCC66 /* AppDelegate.swift */; };
 		1454C8B21C7B097C00BDCC66 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1454C8B11C7B097C00BDCC66 /* ViewController.swift */; };
 		1454C8B71C7B097C00BDCC66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1454C8B61C7B097C00BDCC66 /* Assets.xcassets */; };
@@ -17,6 +21,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		145141D71C87E3A000969E54 /* DefaultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultView.swift; sourceTree = "<group>"; };
+		145141E11C882FB000969E54 /* icon_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow.png; sourceTree = "<group>"; };
+		145141E21C882FB000969E54 /* icon_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow@2x.png"; sourceTree = "<group>"; };
+		145141E31C882FB000969E54 /* icon_arrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow@3x.png"; sourceTree = "<group>"; };
 		1454C8AC1C7B097C00BDCC66 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1454C8AF1C7B097C00BDCC66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1454C8B11C7B097C00BDCC66 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +47,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		145141E01C882CFA00969E54 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				145141E11C882FB000969E54 /* icon_arrow.png */,
+				145141E21C882FB000969E54 /* icon_arrow@2x.png */,
+				145141E31C882FB000969E54 /* icon_arrow@3x.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		1454C8A31C7B097C00BDCC66 = {
 			isa = PBXGroup;
 			children = (
@@ -72,8 +90,10 @@
 		14CF9C0F1C7B0EF500EB5C00 /* EasyPull */ = {
 			isa = PBXGroup;
 			children = (
+				145141E01C882CFA00969E54 /* Resource */,
 				14E5A4481C7B497D00105DDA /* UIScrollView+EasyPull.swift */,
 				14E05C9A1C7F40680014FFEB /* EasyObserver.swift */,
+				145141D71C87E3A000969E54 /* DefaultView.swift */,
 			);
 			path = EasyPull;
 			sourceTree = "<group>";
@@ -137,7 +157,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1454C8BA1C7B097C00BDCC66 /* LaunchScreen.storyboard in Resources */,
+				145141E51C882FB000969E54 /* icon_arrow@2x.png in Resources */,
 				1454C8B71C7B097C00BDCC66 /* Assets.xcassets in Resources */,
+				145141E61C882FB000969E54 /* icon_arrow@3x.png in Resources */,
+				145141E41C882FB000969E54 /* icon_arrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +173,7 @@
 			files = (
 				14E05C9B1C7F40680014FFEB /* EasyObserver.swift in Sources */,
 				14E5A4491C7B497D00105DDA /* UIScrollView+EasyPull.swift in Sources */,
+				145141D81C87E3A000969E54 /* DefaultView.swift in Sources */,
 				1454C8B21C7B097C00BDCC66 /* ViewController.swift in Sources */,
 				1454C8B01C7B097C00BDCC66 /* AppDelegate.swift in Sources */,
 				14CF9C111C7B127900EB5C00 /* MyTableViewCell.swift in Sources */,

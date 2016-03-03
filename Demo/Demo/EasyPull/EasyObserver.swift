@@ -23,53 +23,16 @@ public enum EasyUpPullStyle {
     case UpPullManual
 }
 
-public protocol EasyViewable {
-    func showPulling(progress:CGFloat)
-    func showPullingOver()
-    func showExcuting()
+public protocol EasyViewManual {
+    func showManualPulling(progress:CGFloat)
+    func showManualPullingOver()
+    func showManualExcuting()
+    func resetManual()
 }
 
-public class DefaultView: UIView, EasyViewable {
-    // MARK: - constant and veriable and property
-    let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
-    let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
-    
-    let titleLabel:UILabel = UILabel()
-    
-    // MARK: - life cycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.initView()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    // MARK: - public method
-    public func showPulling(progress:CGFloat) {
-        self.backgroundColor = UIColor.greenColor()
-        titleLabel.text = "下拉刷新"
-        NSLog("%f", progress)
-    }
-    
-    public func showPullingOver() {
-        self.backgroundColor = UIColor.redColor()
-        titleLabel.text = "放开即可刷新"
-    }
-    
-    public func showExcuting() {
-        self.backgroundColor = UIColor.blueColor()
-        titleLabel.text = "正在刷新"
-    }
-    
-    // MARK: - private method
-    private func initView() {
-        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5, self.frame.size.height * 0.5 - 10, 100, 20)
-        titleLabel.font = UIFont.systemFontOfSize(14.0)
-        titleLabel.textColor = UIColor.blackColor()
-        self.addSubview(titleLabel)
-    }
+public protocol EasyViewAutomatic {
+    func showAutomaticExcuting()
+    func resetAutomatic()
 }
 
 public class EasyObserver: NSObject, UIScrollViewDelegate {
@@ -78,8 +41,8 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
     
     private var scrollView: UIScrollView = UIScrollView()
-    private var dropView: DefaultView?
-    private var upView: DefaultView?
+    private var dropView: DefaultDropView?
+    private var upView: DefaultUpView?
     
     public var dropViewHeight: CGFloat = 60.0
     public var upViewHeight: CGFloat = 60.0
@@ -96,23 +59,33 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             state = newValue
             switch state {
             case .DropPulling(let progress):
-                dropView!.showPulling(progress)
+                dropView!.showManualPulling(progress)
             case .DropPullingOver:
-                dropView!.showPullingOver()
+                dropView!.showManualPullingOver()
             case .DropPullingExcuting:
-                dropView!.showExcuting()
+                dropView!.showManualExcuting()
                 self.scrollView.contentInset = UIEdgeInsets(top: dropViewHeight, left: 0, bottom: 0, right: 0)
                 dropAction?()
             case .UpPulling(let progress):
                 self.initUpView()
-                upView!.showPulling(progress)
+                upPullStyle == .UpPullManual ? upView!.showManualPulling(progress) : ()
             case .UpPullingOver:
-                upView!.showPullingOver()
+                if upPullStyle == .UpPullManual {
+                    upView!.showManualPullingOver()
+                }
+                else {
+                    upView?.showAutomaticExcuting()
+                    upAction?()
+                }
             case .UpPullingExcuting:
-                upView!.showExcuting()
-                self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
-                upAction?()
+                if upPullStyle == .UpPullManual {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
+                    upView!.showManualExcuting()
+                    upAction?()
+                }
             case .Free:
+                dropView?.resetManual()
+                upPullStyle == .UpPullAutomatic ? upView?.resetAutomatic() : upView?.resetManual()
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 })
@@ -176,20 +149,18 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     
 // MARK: - private method
     private func initDropView() {
-        dropView = DefaultView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
-        dropView!.backgroundColor = UIColor.yellowColor()
+        dropView = DefaultDropView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
         self.scrollView.addSubview(dropView!)
     }
     
     private func initUpView() {
         if upView == nil {
-            upView = DefaultView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
-            upView!.backgroundColor = UIColor.redColor()
+            upView = DefaultUpView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
         }
         if upView!.superview == nil {
-            upView!.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
             self.scrollView.addSubview(upView!)
         }
+        upView!.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
         if upPullStyle == .UpPullAutomatic {
             self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
         }

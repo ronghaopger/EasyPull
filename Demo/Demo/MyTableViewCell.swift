@@ -15,9 +15,10 @@ class MyTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.grayColor()
+        self.contentView.backgroundColor = UIColor.lightGrayColor()
         let label = UILabel(frame: CGRectMake(0, 0, kMainBoundsWidth, 30.0))
-        label.text = "123"
+        label.textColor = UIColor.blackColor()
+        label.text = NSDate().description
         self.addSubview(label)
     }
 

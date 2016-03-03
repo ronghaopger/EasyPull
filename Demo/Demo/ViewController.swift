@@ -21,16 +21,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.easy_addDropPull({
             NSLog("执行啦")
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
                 tableView.easy_stopDropPull()
             })
         })
         tableView.easy_addUpPull({
             NSLog("执行啦")
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
                 tableView.easy_stopUpPull()
             })
-            }, style: EasyUpPullStyle.UpPullManual)
+            }, style: EasyUpPullStyle.UpPullAutomatic)
         self.view.addSubview(tableView)
         
     }
@@ -42,7 +42,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     // MARK: - delegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 30.0
+        return 50.0
     }
     
     // MARK: - datasource
