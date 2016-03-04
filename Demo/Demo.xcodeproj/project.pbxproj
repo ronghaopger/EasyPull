@@ -18,6 +18,7 @@
 		14CF9C111C7B127900EB5C00 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CF9C101C7B127900EB5C00 /* MyTableViewCell.swift */; };
 		14E05C9B1C7F40680014FFEB /* EasyObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E05C9A1C7F40680014FFEB /* EasyObserver.swift */; };
 		14E5A4491C7B497D00105DDA /* UIScrollView+EasyPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E5A4481C7B497D00105DDA /* UIScrollView+EasyPull.swift */; };
+		14EDD3651C896D04001A6DE4 /* MyCustomerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EDD3641C896D03001A6DE4 /* MyCustomerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		14CF9C101C7B127900EB5C00 /* MyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		14E05C9A1C7F40680014FFEB /* EasyObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyObserver.swift; sourceTree = "<group>"; };
 		14E5A4481C7B497D00105DDA /* UIScrollView+EasyPull.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+EasyPull.swift"; sourceTree = "<group>"; };
+		14EDD3641C896D03001A6DE4 /* MyCustomerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCustomerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				1454C8AF1C7B097C00BDCC66 /* AppDelegate.swift */,
 				1454C8B11C7B097C00BDCC66 /* ViewController.swift */,
 				14CF9C101C7B127900EB5C00 /* MyTableViewCell.swift */,
+				14EDD3641C896D03001A6DE4 /* MyCustomerView.swift */,
 				1454C8B61C7B097C00BDCC66 /* Assets.xcassets */,
 				1454C8B81C7B097C00BDCC66 /* LaunchScreen.storyboard */,
 				1454C8BB1C7B097C00BDCC66 /* Info.plist */,
@@ -172,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14E05C9B1C7F40680014FFEB /* EasyObserver.swift in Sources */,
+				14EDD3651C896D04001A6DE4 /* MyCustomerView.swift in Sources */,
 				14E5A4491C7B497D00105DDA /* UIScrollView+EasyPull.swift in Sources */,
 				145141D81C87E3A000969E54 /* DefaultView.swift in Sources */,
 				1454C8B21C7B097C00BDCC66 /* ViewController.swift in Sources */,

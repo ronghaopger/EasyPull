@@ -14,7 +14,7 @@ extension UIScrollView {
         static var ContentOffsetObserver = "easy_ContentOffsetObserver"
     }
 // MARK: - constant and veriable and property
-    private var observer: EasyObserver {
+    private var Observer: EasyObserver {
         get {
             var obj = objc_getAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver) as? EasyObserver
             if obj == nil {
@@ -29,23 +29,38 @@ extension UIScrollView {
     }
     
 // MARK: - public method
-    public func easy_addDropPull(action: () ->Void) {
-        self.observer.dropAction = action
-        self.addObserver(self.observer, forKeyPath: "contentOffset", options: .New, context: nil)
+    public func easy_addDropPull(action: (() ->Void), customerDropView: EasyViewManual? = nil) {
+        self.Observer.dropAction = action
+        if let view = customerDropView {
+            self.Observer.DropView = view
+        }
+        self.addObserver(self.Observer, forKeyPath: "contentOffset", options: .New, context: nil)
     }
     
     public func easy_stopDropPull() {
-        self.observer.stopExcuting()
+        self.Observer.stopExcuting()
     }
     
-    public func easy_addUpPull(action: () ->Void, style: EasyUpPullStyle) {
-        self.observer.upPullStyle = style
-        self.observer.upAction = action
-        self.addObserver(self.observer, forKeyPath: "contentOffset", options: .New, context: nil)
+    public func easy_addUpPullManual(action: (() ->Void), customerUpView: EasyViewManual? = nil) {
+        self.Observer.upPullStyle = .UpPullManual
+        self.Observer.upAction = action
+        if let view = customerUpView {
+            self.Observer.UpViewForManual = view
+        }
+        self.addObserver(self.Observer, forKeyPath: "contentOffset", options: .New, context: nil)
+    }
+    
+    public func easy_addUpPullAutomatic(action: (() ->Void), customerUpView: EasyViewAutomatic? = nil) {
+        self.Observer.upPullStyle = .UpPullAutomatic
+        self.Observer.upAction = action
+        if let view = customerUpView {
+            self.Observer.UpViewForAutomatic = view
+        }
+        self.addObserver(self.Observer, forKeyPath: "contentOffset", options: .New, context: nil)
     }
     
     public func easy_stopUpPull() {
-        self.observer.stopExcuting()
+        self.Observer.stopExcuting()
     }
     
 }

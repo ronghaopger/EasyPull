@@ -19,18 +19,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let tableView = UITableView(frame: CGRectMake(0, 0, kMainBoundsWidth, kMainBoundsHeight))
         tableView.delegate = self
         tableView.dataSource = self
+
+        //默认下拉
         tableView.easy_addDropPull({
             NSLog("Run")
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
                 tableView.easy_stopDropPull()
             })
         })
-        tableView.easy_addUpPull({
+        //自定义下拉
+//        tableView.easy_addDropPull({
+//            NSLog("Run")
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+//                tableView.easy_stopDropPull()
+//            })
+//        }, customerDropView: MyCustomerDropView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
+        
+        
+        //默认上拉
+        //手动模式
+//        tableView.easy_addUpPullManual({
+//            NSLog("Run")
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+//                tableView.easy_stopUpPull()
+//            })
+//        })
+        //自动模式
+        tableView.easy_addUpPullAutomatic({
             NSLog("Run")
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
                 tableView.easy_stopUpPull()
             })
-            }, style: EasyUpPullStyle.UpPullAutomatic)
+        })
+        
+        
+        //自定义上拉
+        
         self.view.addSubview(tableView)
         
     }

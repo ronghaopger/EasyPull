@@ -8,7 +8,12 @@
 
 import UIKit
 
-public enum EasyState {
+internal enum EasyUpPullStyle {
+    case UpPullAutomatic
+    case UpPullManual
+}
+
+internal enum EasyState {
     case DropPulling(CGFloat)
     case DropPullingOver
     case DropPullingExcuting
@@ -16,11 +21,6 @@ public enum EasyState {
     case UpPullingOver
     case UpPullingExcuting
     case Free
-}
-
-public enum EasyUpPullStyle {
-    case UpPullAutomatic
-    case UpPullManual
 }
 
 public protocol EasyViewManual {
@@ -43,46 +43,80 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
     
     private var scrollView: UIScrollView = UIScrollView()
+    private var dropViewHeight: CGFloat = 70.0
+    private var upViewHeight: CGFloat = 60.0
     
-    public var dropViewHeight: CGFloat = 60.0
-    public var upViewHeight: CGFloat = 60.0
-    public var upPullStyle: EasyUpPullStyle = .UpPullAutomatic
-    public var dropAction: (() ->Void)?
-    public var upAction: (() ->Void)?
+    internal var upPullStyle: EasyUpPullStyle = .UpPullAutomatic
+    internal var dropAction: (() ->Void)?
+    internal var upAction: (() ->Void)?
     
-    private var dropView: DefaultDropView?
-    public var DropView: DefaultDropView {
+    private var dropView: EasyViewManual?
+    internal var DropView: EasyViewManual {
         get {
             if dropView == nil {
                 dropView = DefaultDropView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
-                self.scrollView.addSubview(dropView!)
+            }
+            if let view = dropView as? UIView {
+                if view.superview == nil {
+                    self.scrollView.addSubview(view)
+                }
             }
             return dropView!
         }
         set {
-            dropView = newValue
+            if let view = newValue as? UIView {
+                dropView = newValue
+                dropViewHeight = view.frame.size.height
+            }
         }
     }
     
-    private var upView: DefaultUpView?
-    public var UpView: DefaultUpView {
+    private var upViewForManual: EasyViewManual?
+    internal var UpViewForManual: EasyViewManual {
         get {
-            if upView == nil {
-                upView = DefaultUpView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
+            if upViewForManual == nil {
+                upViewForManual = DefaultUpView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
             }
-            if upView!.superview == nil {
-                self.scrollView.addSubview(upView!)
+            if let view = upViewForManual as? UIView {
+                if view.superview == nil {
+                    self.scrollView.addSubview(view)
+                }
+                view.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
             }
-            upView!.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
-            return upView!
+            return upViewForManual!
         }
         set {
-            upView = newValue
+            if let view = newValue as? UIView {
+                upViewForManual = newValue
+                upViewHeight = view.frame.size.height
+            }
+        }
+    }
+    
+    private var upViewForAutomatic: EasyViewAutomatic?
+    internal var UpViewForAutomatic: EasyViewAutomatic {
+        get {
+            if upViewForAutomatic == nil {
+                upViewForAutomatic = DefaultUpView(frame: CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight))
+            }
+            if let view = upViewForAutomatic as? UIView {
+                if view.superview == nil {
+                    self.scrollView.addSubview(view)
+                }
+                view.frame = CGRectMake(0, self.scrollView.contentSize.height, kMainBoundsWidth, upViewHeight)
+            }
+            return upViewForAutomatic!
+        }
+        set {
+            if let view = newValue as? UIView {
+                upViewForAutomatic = newValue
+                upViewHeight = view.frame.size.height
+            }
         }
     }
     
     private var state: EasyState = .Free
-    public var State: EasyState {
+    internal var State: EasyState {
         get {
             return state
         }
@@ -101,24 +135,24 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 if upPullStyle == .UpPullAutomatic {
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
                 }
-                upPullStyle == .UpPullManual ? UpView.showManualPulling(progress) : ()
+                upPullStyle == .UpPullManual ? UpViewForManual.showManualPulling(progress) : ()
             case .UpPullingOver:
                 if upPullStyle == .UpPullManual {
-                    UpView.showManualPullingOver()
+                    UpViewForManual.showManualPullingOver()
                 }
                 else {
-                    UpView.showAutomaticExcuting()
+                    UpViewForAutomatic.showAutomaticExcuting()
                     upAction?()
                 }
             case .UpPullingExcuting:
                 if upPullStyle == .UpPullManual {
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
-                    UpView.showManualExcuting()
+                    UpViewForManual.showManualExcuting()
                     upAction?()
                 }
             case .Free:
                 DropView.resetManual()
-                upPullStyle == .UpPullAutomatic ? UpView.resetAutomatic() : UpView.resetManual()
+                upPullStyle == .UpPullAutomatic ? UpViewForAutomatic.resetAutomatic() : UpViewForManual.resetManual()
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 })

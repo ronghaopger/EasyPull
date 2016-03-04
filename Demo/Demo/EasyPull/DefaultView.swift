@@ -91,7 +91,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
         super.init(coder: aDecoder)
     }
     
-    // MARK: - public method
+    // MARK: - EasyViewManual
     public func showManualPulling(progress:CGFloat) {
         arrowImage.hidden = false
         indicatorView.hidden = true
@@ -119,6 +119,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
         arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
     }
     
+    // MARK: - EasyViewAutomatic
     public func showAutomaticExcuting() {
         indicatorView.hidden = false
         titleLabel.text = "正在加载更多..."
