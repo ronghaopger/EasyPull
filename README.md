@@ -1,6 +1,16 @@
 # EasyPull
 Let pull-to-refresh Easy for any UIScrollView
 
-// TODO:
-1、默认页面的完善，以及默认页面接口的完善
-2、支持自定义页面
+## Adding EasyPull to your project
+
+### From CocoaPods
+
+### From Carthage
+
+### Source files
+
+## Usage
+
+## License
+
+This code is distributed under the terms and conditions of the [MIT license](LICENSE).
