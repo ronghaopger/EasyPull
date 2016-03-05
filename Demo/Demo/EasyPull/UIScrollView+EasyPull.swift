@@ -42,7 +42,7 @@ extension UIScrollView {
     }
     
     public func easy_addUpPullManual(action: (() ->Void), customerUpView: EasyViewManual? = nil) {
-        self.Observer.upPullStyle = .UpPullManual
+        self.Observer.upPullMode = .UpPullManualMode
         self.Observer.upAction = action
         if let view = customerUpView {
             self.Observer.UpViewForManual = view
@@ -51,7 +51,7 @@ extension UIScrollView {
     }
     
     public func easy_addUpPullAutomatic(action: (() ->Void), customerUpView: EasyViewAutomatic? = nil) {
-        self.Observer.upPullStyle = .UpPullAutomatic
+        self.Observer.upPullMode = .UpPullAutomaticMode
         self.Observer.upAction = action
         if let view = customerUpView {
             self.Observer.UpViewForAutomatic = view

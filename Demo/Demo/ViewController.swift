@@ -24,6 +24,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.easy_addDropPull({
             NSLog("Run")
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+                tableView.reloadData()
                 tableView.easy_stopDropPull()
             })
         })
@@ -31,6 +32,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        tableView.easy_addDropPull({
 //            NSLog("Run")
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+//                tableView.reloadData()
 //                tableView.easy_stopDropPull()
 //            })
 //        }, customerDropView: MyCustomerDropView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
@@ -41,6 +43,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        tableView.easy_addUpPullManual({
 //            NSLog("Run")
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+//                tableView.reloadData()
 //                tableView.easy_stopUpPull()
 //            })
 //        })
@@ -48,6 +51,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.easy_addUpPullAutomatic({
             NSLog("Run")
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+                tableView.reloadData()
                 tableView.easy_stopUpPull()
             })
         })
@@ -75,10 +79,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("myCell")
+        var cell: MyTableViewCell? = tableView.dequeueReusableCellWithIdentifier("myCell") as? MyTableViewCell
         if (cell == nil) {
             cell = MyTableViewCell(style: .Default, reuseIdentifier: "myCell")
             cell?.frame = CGRectMake(0, 0, kMainBoundsWidth, 30.0)
+        }
+        switch indexPath.row {
+        case 1:
+            cell?.titleLabel?.text = " pull-to-refresh have two mode:"
+        case 2:
+            cell?.titleLabel?.text = " Manual mode and Automatic mode"
+        case 3:
+            cell?.titleLabel?.text = " drop-pull support Manual mode"
+        case 4:
+            cell?.titleLabel?.text = " up-pull support all modes"
+        case 6:
+            cell?.titleLabel?.text = " you can use the default view"
+        case 7:
+            cell?.titleLabel?.text = " or make your customer view"
+        case 8:
+            cell?.titleLabel?.text = " it's easy."
+        default:
+            break
         }
         return cell!
     }

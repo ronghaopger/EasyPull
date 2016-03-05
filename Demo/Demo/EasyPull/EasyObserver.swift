@@ -8,9 +8,9 @@
 
 import UIKit
 
-internal enum EasyUpPullStyle {
-    case UpPullAutomatic
-    case UpPullManual
+internal enum EasyUpPullMode {
+    case UpPullAutomaticMode
+    case UpPullManualMode
 }
 
 internal enum EasyState {
@@ -31,6 +31,7 @@ public protocol EasyViewManual {
 }
 
 public protocol EasyViewAutomatic {
+    func showAutomaticPulling(progress:CGFloat)
     func showAutomaticExcuting()
     func resetAutomatic()
 }
@@ -46,7 +47,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     private var dropViewHeight: CGFloat = 70.0
     private var upViewHeight: CGFloat = 60.0
     
-    internal var upPullStyle: EasyUpPullStyle = .UpPullAutomatic
+    internal var upPullMode: EasyUpPullMode = .UpPullAutomaticMode
     internal var dropAction: (() ->Void)?
     internal var upAction: (() ->Void)?
     
@@ -132,12 +133,15 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 self.scrollView.contentInset = UIEdgeInsets(top: dropViewHeight, left: 0, bottom: 0, right: 0)
                 dropAction?()
             case .UpPulling(let progress):
-                if upPullStyle == .UpPullAutomatic {
+                if upPullMode == .UpPullAutomaticMode {
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
+                    UpViewForAutomatic.showAutomaticPulling(progress)
                 }
-                upPullStyle == .UpPullManual ? UpViewForManual.showManualPulling(progress) : ()
+                else {
+                    UpViewForManual.showManualPulling(progress)
+                }
             case .UpPullingOver:
-                if upPullStyle == .UpPullManual {
+                if upPullMode == .UpPullManualMode {
                     UpViewForManual.showManualPullingOver()
                 }
                 else {
@@ -145,14 +149,14 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                     upAction?()
                 }
             case .UpPullingExcuting:
-                if upPullStyle == .UpPullManual {
+                if upPullMode == .UpPullManualMode {
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewHeight, right: 0)
                     UpViewForManual.showManualExcuting()
                     upAction?()
                 }
             case .Free:
                 DropView.resetManual()
-                upPullStyle == .UpPullAutomatic ? UpViewForAutomatic.resetAutomatic() : UpViewForManual.resetManual()
+                upPullMode == .UpPullAutomaticMode ? UpViewForAutomatic.resetAutomatic() : UpViewForManual.resetManual()
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 })
@@ -187,16 +191,26 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             if contentHeight >= frameHeight
                 && pullLength >= upViewHeight
             {
+                switch State {
+                case .UpPullingOver:
+                    break
+                default:
                     State = .UpPullingOver
+                }
             }
             else if contentHeight >= frameHeight
                 && pullLength > 0
                 && pullLength < upViewHeight
             {
-                    State = .UpPulling(pullLength / upViewHeight)
+                State = .UpPulling(pullLength / upViewHeight)
             }
             else if yOffset <= -dropViewHeight {
-                State = .DropPullingOver
+                switch State {
+                case .DropPullingOver:
+                    break
+                default:
+                    State = .DropPullingOver
+                }
             }
             else if yOffset < 0 && yOffset > -dropViewHeight {
                 State = .DropPulling(-yOffset / dropViewHeight)
