@@ -1,11 +1,16 @@
 # EasyPull
 Let pull-to-refresh Easy for any UIScrollView
 
+You have the flexibility to set custom view with fantastic animation.
+
+
 ## Usage
 
 (see sample Xcode project in `/Demo`)
 
 ### Adding Drop Pull to Refresh
+
+(Only support Manual Mode)
 
 ```Swift
  tableView.easy_addDropPull({
@@ -16,7 +21,7 @@ Let pull-to-refresh Easy for any UIScrollView
 
 ### Adding Up Pull to Refresh
 
-#### Manual Mode
+(Manual Mode)
 
 ```Swift
  tableView.easy_addUpPullManual({
@@ -25,7 +30,7 @@ Let pull-to-refresh Easy for any UIScrollView
  })
 ```
 
-#### Automatic Mode
+(Automatic Mode)
 
 ```Swift
  tableView.easy_addUpPullAutomatic({
@@ -33,6 +38,19 @@ Let pull-to-refresh Easy for any UIScrollView
      // call tableView.easy_stopUpPull() when done
  })
 ```
+
+### Customization
+
+The pull to refresh view can be customized using the following methods:
+
+```Swift
+ func easy_addDropPull(action: (() ->Void), customDropView: EasyViewManual? = nil)
+ func easy_addUpPullManual(action: (() ->Void), customUpView: EasyViewManual? = nil)
+ func easy_addUpPullAutomatic(action: (() ->Void), customUpView: EasyViewAutomatic? = nil)
+```
+
+Your custom views must implement the EasyViewManual protocol when you prefer the Manual mode or the EasyViewAutomatic protocol when you prefer the Automatic mode.
+(see sample Xcode project in `/Demo/MyCusyomView.swift` or `/Demo/EasyPull/DefaultView.swift`)
 
 ## Installation
 

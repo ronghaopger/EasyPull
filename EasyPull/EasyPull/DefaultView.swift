@@ -29,12 +29,11 @@ public class DefaultDropView: UIView, EasyViewManual {
     // MARK: - public method
     public func showManualPulling(progress:CGFloat) {
         indicatorView.hidden = true
-        titleLabel.text = "下拉刷新..."
-        NSLog("%f", progress)
+        titleLabel.text = "Pull to refresh..."
     }
     
     public func showManualPullingOver() {
-        titleLabel.text = "松开刷新..."
+        titleLabel.text = "Release to refresh..."
         UIView.animateWithDuration(0.4) { () -> Void in
             self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
         }
@@ -43,7 +42,7 @@ public class DefaultDropView: UIView, EasyViewManual {
     public func showManualExcuting() {
         arrowImage.hidden = true
         indicatorView.hidden = false
-        titleLabel.text = "正在刷新..."
+        titleLabel.text = "Loading..."
     }
     
     public func resetManual() {
@@ -57,14 +56,14 @@ public class DefaultDropView: UIView, EasyViewManual {
     private func initView() {
         self.backgroundColor = UIColor.whiteColor()
         
-        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 40, self.frame.size.height * 0.5, 10, 13)
+        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 50, self.frame.size.height * 0.5, 10, 13)
         self.addSubview(arrowImage)
         
-        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 40, self.frame.size.height * 0.5, 10, 13)
+        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 50, self.frame.size.height * 0.5, 10, 13)
         indicatorView.startAnimating()
         self.addSubview(indicatorView)
         
-        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 17, self.frame.size.height * 0.5 - 3, 100, 20)
+        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 27, self.frame.size.height * 0.5 - 3, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
         self.addSubview(titleLabel)
@@ -93,12 +92,11 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     public func showManualPulling(progress:CGFloat) {
         arrowImage.hidden = false
         indicatorView.hidden = true
-        titleLabel.text = "上拉加载更多..."
-        NSLog("%f", progress)
+        titleLabel.text = "Pull to load more..."
     }
     
     public func showManualPullingOver() {
-        titleLabel.text = "松开即可加载..."
+        titleLabel.text = "Release to load more..."
         UIView.animateWithDuration(0.4) { () -> Void in
             self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 2));
         }
@@ -107,7 +105,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     public func showManualExcuting() {
         arrowImage.hidden = true
         indicatorView.hidden = false
-        titleLabel.text = "正在加载更多..."
+        titleLabel.text = "Loading..."
     }
     
     public func resetManual() {
@@ -119,12 +117,12 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     
     // MARK: - EasyViewAutomatic
     public func showAutomaticPulling(progress: CGFloat) {
-        titleLabel.text = "上拉加载更多"
+        titleLabel.text = "Pull to load more"
     }
     
     public func showAutomaticExcuting() {
         indicatorView.hidden = false
-        titleLabel.text = "正在加载更多..."
+        titleLabel.text = "Loading..."
     }
     
     public func resetAutomatic() {
@@ -137,16 +135,16 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     private func initView() {
         self.backgroundColor = UIColor.whiteColor()
         
-        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 40, self.frame.size.height * 0.5 - 10, 10, 13)
+        arrowImage.frame = CGRectMake(kMainBoundsWidth * 0.5 - 50, self.frame.size.height * 0.5 - 10, 10, 13)
         arrowImage.hidden = true
         arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
         self.addSubview(arrowImage)
         
-        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 40, self.frame.size.height * 0.5 - 10, 10, 13)
+        indicatorView.frame = CGRectMake(kMainBoundsWidth * 0.5 - 50, self.frame.size.height * 0.5 - 10, 10, 13)
         indicatorView.startAnimating()
         self.addSubview(indicatorView)
         
-        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 17, self.frame.size.height * 0.5 - 13, 100, 20)
+        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 27, self.frame.size.height * 0.5 - 13, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
         self.addSubview(titleLabel)

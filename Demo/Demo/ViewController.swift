@@ -19,48 +19,65 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let tableView = UITableView(frame: CGRectMake(0, 0, kMainBoundsWidth, kMainBoundsHeight))
         tableView.delegate = self
         tableView.dataSource = self
-
-        //默认下拉
-        tableView.easy_addDropPull({
-            NSLog("Run")
+        
+        
+        
+        func delayStopDrop() {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
                 tableView.reloadData()
                 tableView.easy_stopDropPull()
             })
-        })
-        //自定义下拉
-//        tableView.easy_addDropPull({
-//            NSLog("Run")
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
-//                tableView.reloadData()
-//                tableView.easy_stopDropPull()
-//            })
-//        }, customerDropView: MyCustomerDropView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
-        
-        
-        //默认上拉
-        //手动模式
-//        tableView.easy_addUpPullManual({
-//            NSLog("Run")
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
-//                tableView.reloadData()
-//                tableView.easy_stopUpPull()
-//            })
-//        })
-        //自动模式
-        tableView.easy_addUpPullAutomatic({
+        }
+        //drop pull
+        //default view
+        tableView.easy_addDropPull({
             NSLog("Run")
+            delayStopDrop()
+        })
+        //custom view
+//        tableView.easy_addDropPull({
+//            NSLog("custom Run")
+//            delayStopDrop()
+//        }, customDropView: MyCustomDropView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
+        
+        
+        
+        func delayStopUp() {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
                 tableView.reloadData()
                 tableView.easy_stopUpPull()
             })
+        }
+        //up pull
+        //default view
+        //Manual mode
+//        tableView.easy_addUpPullManual({
+//            NSLog("Run")
+//            delayStopUp()
+//        })
+
+        //Automatic mode
+        tableView.easy_addUpPullAutomatic({
+            NSLog("Run")
+            delayStopUp()
         })
         
+        //custom view
+        //Manual mode
+//        tableView.easy_addUpPullManual({
+//            NSLog("custom Run")
+//            delayStopUp()
+//        }, customUpView: MyCustomUpView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
+    
+        //Automatic mode
+//        tableView.easy_addUpPullAutomatic({
+//            NSLog("custom Run")
+//            delayStopUp()
+//        }, customUpView: MyCustomUpView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
         
-        //自定义上拉
+        
         
         self.view.addSubview(tableView)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,13 +107,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case 2:
             cell?.titleLabel?.text = " Manual mode and Automatic mode"
         case 3:
-            cell?.titleLabel?.text = " drop-pull support Manual mode"
+            cell?.titleLabel?.text = " drop-pull only support Manual mode"
         case 4:
             cell?.titleLabel?.text = " up-pull support all modes"
         case 6:
             cell?.titleLabel?.text = " you can use the default view"
         case 7:
-            cell?.titleLabel?.text = " or make your customer view"
+            cell?.titleLabel?.text = " or set your custom view"
         case 8:
             cell?.titleLabel?.text = " it's easy."
         default:
