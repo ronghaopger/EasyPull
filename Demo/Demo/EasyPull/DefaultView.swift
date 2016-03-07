@@ -11,7 +11,6 @@ import UIKit
 public class DefaultDropView: UIView, EasyViewManual {
     // MARK: - constant and veriable and property
     let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
-    let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
     
     let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png"))
     let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -75,7 +74,6 @@ public class DefaultDropView: UIView, EasyViewManual {
 public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - constant and veriable and property
     let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
-    let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
     
     let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png"))
     let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

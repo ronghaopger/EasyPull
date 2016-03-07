@@ -100,6 +100,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case 8:
             cell?.titleLabel?.text = " it's easy."
         default:
+            cell?.titleLabel?.text = " "
             break
         }
         return cell!
