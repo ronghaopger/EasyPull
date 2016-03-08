@@ -12,7 +12,7 @@ public class DefaultDropView: UIView, EasyViewManual {
     // MARK: - constant and veriable and property
     let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
     
-    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png"))
+    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png", inBundle: NSBundle(forClass: DefaultDropView.self), compatibleWithTraitCollection: nil))
     let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let titleLabel:UILabel = UILabel()
     
@@ -77,7 +77,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - constant and veriable and property
     let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
     
-    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png"))
+    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png", inBundle: NSBundle(forClass: DefaultDropView.self), compatibleWithTraitCollection: nil))
     let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let titleLabel:UILabel = UILabel()
     
