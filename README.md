@@ -62,7 +62,13 @@ Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode
 
 ### CocoaPods
 
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
 pod 'EasyPull', '~> 1.1.0'
+```
 
 ### Source files
 
