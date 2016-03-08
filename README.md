@@ -8,7 +8,7 @@ You have the flexibility to set custom view with fantastic animation.(可以灵�
 
 (see sample Xcode project in `/Demo`)
 
-### Adding Drop Pull to Refresh
+### Adding Drop Pull to Refresh (添加下拉刷新)
 
 Only support Manual Mode(仅支持手动模式)
 
@@ -19,7 +19,7 @@ Only support Manual Mode(仅支持手动模式)
  })
 ```
 
-### Adding Up Pull to Refresh and Load more
+### Adding Up Pull to Refresh and Load more (添加上拉加载)
 
 Manual Mode(手动模式)
 
@@ -50,7 +50,9 @@ The pull-to-refresh view can be customized using the following methods:
 ```
 
 Your custom views must implement the `EasyViewManual` protocol when you prefer the Manual mode 
+
 Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode.
+
 (如果需要手动模式，你的自定义view必须实现EasyViewManual协议。如果需要自动模式，你的自定义view则必须实现EasyViewAutomatic协议。)
 
 (see sample Xcode project in `/Demo/MyCusyomView.swift` or `/Demo/EasyPull/DefaultView.swift`)
