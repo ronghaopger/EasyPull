@@ -8,6 +8,6 @@ Pod::Spec.new do |s|
   s.platform = :ios, "8.0"
   s.source = { :git => "https://github.com/ronghaopger/EasyPull.git", :tag => s.version }
   s.source_files = 'EasyPull/EasyPull/*.swift'
-  s.resource     = 'EasyPull/EasyPull/Resource'
+  s.resource     = 'EasyPull/EasyPull/Resource/*.png'
   s.requires_arc = true
 end

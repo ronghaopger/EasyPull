@@ -51,16 +51,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //up pull
         //default view
         //Manual mode
-//        tableView.easy_addUpPullManual({
-//            NSLog("Run")
-//            delayStopUp()
-//        })
-
-        //Automatic mode
-        tableView.easy_addUpPullAutomatic({
+        tableView.easy_addUpPullManual({
             NSLog("Run")
             delayStopUp()
         })
+
+        //Automatic mode
+//        tableView.easy_addUpPullAutomatic({
+//            NSLog("Run")
+//            delayStopUp()
+//        })
         
         //custom view
         //Manual mode

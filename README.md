@@ -3,6 +3,7 @@ Let pull-to-refresh Easy for any UIScrollView in Swift
 
 You have the flexibility to set custom view with fantastic animation.(可以灵活的设置自定义效果，实现期望的动画)
 
+---
 
 ## Usage
 

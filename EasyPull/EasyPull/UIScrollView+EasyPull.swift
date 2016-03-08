@@ -51,6 +51,7 @@ extension UIScrollView {
     - parameter customDropView: custom view(need to implement the EasyViewManual protocol). default is nil.
     */
     public func easy_addDropPull(action: (() ->Void), customDropView: EasyViewManual? = nil) {
+        self.Observer.dropPullEnable = true
         self.Observer.dropAction = action
         if let view = customDropView {
             self.Observer.DropView = view
@@ -72,6 +73,7 @@ extension UIScrollView {
      - parameter customUpView: custom view(need to implement the EasyViewManual protocol). default is nil.
      */
     public func easy_addUpPullManual(action: (() ->Void), customUpView: EasyViewManual? = nil) {
+        self.Observer.upPullEnable = true
         self.Observer.upPullMode = .EasyUpPullModeManual
         self.Observer.upAction = action
         if let view = customUpView {
@@ -87,6 +89,7 @@ extension UIScrollView {
      - parameter customUpView: custom view(need to implement the EasyViewAutomatic protocol). default is nil.
      */
     public func easy_addUpPullAutomatic(action: (() ->Void), customUpView: EasyViewAutomatic? = nil) {
+        self.Observer.upPullEnable = true
         self.Observer.upPullMode = .EasyUpPullModeAutomatic
         self.Observer.upAction = action
         if let view = customUpView {

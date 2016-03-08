@@ -49,6 +49,8 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     private var upViewHeight: CGFloat = 60.0
     
     internal var upPullMode: EasyUpPullMode = .EasyUpPullModeAutomatic
+    internal var dropPullEnable: Bool = false
+    internal var upPullEnable: Bool = false
     internal var dropAction: (() ->Void)?
     internal var upAction: (() ->Void)?
     
@@ -59,7 +61,8 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 dropView = DefaultDropView(frame: CGRectMake(0, -dropViewHeight, kMainBoundsWidth, dropViewHeight))
             }
             if let view = dropView as? UIView {
-                if view.superview == nil {
+                if view.superview == nil
+                    && dropPullEnable {
                     self.scrollView?.addSubview(view)
                 }
             }
@@ -80,7 +83,8 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 upViewForManual = DefaultUpView(frame: CGRectMake(0, self.scrollView!.contentSize.height, kMainBoundsWidth, upViewHeight))
             }
             if let view = upViewForManual as? UIView {
-                if view.superview == nil {
+                if view.superview == nil
+                    && upPullEnable {
                     self.scrollView!.addSubview(view)
                 }
                 view.frame = CGRectMake(0, self.scrollView!.contentSize.height, kMainBoundsWidth, upViewHeight)
@@ -102,7 +106,8 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 upViewForAutomatic = DefaultUpView(frame: CGRectMake(0, self.scrollView!.contentSize.height, kMainBoundsWidth, upViewHeight))
             }
             if let view = upViewForAutomatic as? UIView {
-                if view.superview == nil {
+                if view.superview == nil
+                    && upPullEnable {
                     self.scrollView!.addSubview(view)
                 }
                 view.frame = CGRectMake(0, self.scrollView!.contentSize.height, kMainBoundsWidth, upViewHeight)
@@ -192,6 +197,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             let pullLength = yOffset + frameHeight - contentHeight
             if contentHeight >= frameHeight
                 && pullLength >= upViewHeight
+                && upPullEnable
             {
                 switch State {
                 case .UpPullingOver:
@@ -203,10 +209,12 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             else if contentHeight >= frameHeight
                 && pullLength > 0
                 && pullLength < upViewHeight
+                && upPullEnable
             {
                 State = .UpPulling(pullLength / upViewHeight)
             }
-            else if yOffset <= -dropViewHeight {
+            else if yOffset <= -dropViewHeight
+                && dropPullEnable {
                 switch State {
                 case .DropPullingOver:
                     break
@@ -214,7 +222,9 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                     State = .DropPullingOver
                 }
             }
-            else if yOffset < 0 && yOffset > -dropViewHeight {
+            else if yOffset < 0
+                && yOffset > -dropViewHeight
+                && dropPullEnable {
                 State = .DropPulling(-yOffset / dropViewHeight)
             }
         }

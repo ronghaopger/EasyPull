@@ -30,6 +30,9 @@ public class DefaultDropView: UIView, EasyViewManual {
     public func showManualPulling(progress:CGFloat) {
         indicatorView.hidden = true
         titleLabel.text = "Pull to refresh..."
+        UIView.animateWithDuration(0.4) { () -> Void in
+            self.arrowImage.transform = CGAffineTransformMakeRotation(0);
+        }
     }
     
     public func showManualPullingOver() {
@@ -93,6 +96,9 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
         arrowImage.hidden = false
         indicatorView.hidden = true
         titleLabel.text = "Pull to load more..."
+        UIView.animateWithDuration(0.4) { () -> Void in
+            self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
+        }
     }
     
     public func showManualPullingOver() {
