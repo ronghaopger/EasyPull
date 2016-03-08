@@ -10,8 +10,6 @@ import UIKit
 
 public class MyCustomDropView: UIView, EasyViewManual {
     // MARK: - constant and veriable and property
-    let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
-    
     let titleLabel:UILabel = UILabel()
     
     // MARK: - life cycle
@@ -46,7 +44,7 @@ public class MyCustomDropView: UIView, EasyViewManual {
     private func initView() {
         self.backgroundColor = UIColor.whiteColor()
         
-        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 50, self.frame.size.height * 0.5 - 3, 150, 20)
+        titleLabel.frame = CGRectMake(self.frame.size.width * 0.5 - 50, self.frame.size.height * 0.5 - 3, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
         self.addSubview(titleLabel)
@@ -56,8 +54,6 @@ public class MyCustomDropView: UIView, EasyViewManual {
 
 public class MyCustomUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - constant and veriable and property
-    let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
-    
     let titleLabel:UILabel = UILabel()
     
     // MARK: - life cycle
@@ -105,7 +101,7 @@ public class MyCustomUpView: UIView, EasyViewManual, EasyViewAutomatic {
     private func initView() {
         self.backgroundColor = UIColor.whiteColor()
         
-        titleLabel.frame = CGRectMake(kMainBoundsWidth * 0.5 - 50, self.frame.size.height * 0.5 - 13, 150, 20)
+        titleLabel.frame = CGRectMake(self.frame.size.width * 0.5 - 50, self.frame.size.height * 0.5 - 13, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
         self.addSubview(titleLabel)
