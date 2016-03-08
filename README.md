@@ -1,5 +1,5 @@
 # EasyPull
-Let pull-to-refresh Easy for any UIScrollView
+Let pull-to-refresh Easy for any UIScrollView in Swift
 
 You have the flexibility to set custom view with fantastic animation.(可以灵活的设置自定义效果，实现期望的动画)
 
@@ -49,7 +49,7 @@ The pull-to-refresh view can be customized using the following methods:
  func easy_addUpPullAutomatic(action: (() ->Void), customUpView: EasyViewAutomatic? = nil)
 ```
 
-Your custom views must implement the `EasyViewManual` protocol when you prefer the Manual mode 
+**NOTE:** Your custom views must implement the `EasyViewManual` protocol when you prefer the Manual mode 
 
 Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode.
 
@@ -61,8 +61,11 @@ Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode
 
 ### From CocoaPods
 
+
+
 ### Source files
 
+Alternatively you can directly add the `/EasyPull/EasyPull` source files to your project.
 
 ## License
 
