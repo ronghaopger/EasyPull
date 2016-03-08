@@ -1,7 +1,7 @@
 # EasyPull
 Let pull-to-refresh Easy for any UIScrollView
 
-You have the flexibility to set custom view with fantastic animation.
+You have the flexibility to set custom view with fantastic animation.(可以灵活的设置自定义效果，实现期望的动画)
 
 
 ## Usage
@@ -10,7 +10,7 @@ You have the flexibility to set custom view with fantastic animation.
 
 ### Adding Drop Pull to Refresh
 
-(Only support Manual Mode)
+Only support Manual Mode(仅支持手动模式)
 
 ```Swift
  tableView.easy_addDropPull({
@@ -19,9 +19,9 @@ You have the flexibility to set custom view with fantastic animation.
  })
 ```
 
-### Adding Up Pull to Refresh
+### Adding Up Pull to Refresh and Load more
 
-(Manual Mode)
+Manual Mode(手动模式)
 
 ```Swift
  tableView.easy_addUpPullManual({
@@ -30,7 +30,7 @@ You have the flexibility to set custom view with fantastic animation.
  })
 ```
 
-(Automatic Mode)
+Automatic Mode(自动模式)
 
 ```Swift
  tableView.easy_addUpPullAutomatic({
@@ -41,7 +41,7 @@ You have the flexibility to set custom view with fantastic animation.
 
 ### Customization
 
-The pull to refresh view can be customized using the following methods:
+The pull-to-refresh view can be customized using the following methods:
 
 ```Swift
  func easy_addDropPull(action: (() ->Void), customDropView: EasyViewManual? = nil)
@@ -49,14 +49,15 @@ The pull to refresh view can be customized using the following methods:
  func easy_addUpPullAutomatic(action: (() ->Void), customUpView: EasyViewAutomatic? = nil)
 ```
 
-Your custom views must implement the EasyViewManual protocol when you prefer the Manual mode or the EasyViewAutomatic protocol when you prefer the Automatic mode.
+Your custom views must implement the `EasyViewManual` protocol when you prefer the Manual mode 
+Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode.
+(如果需要手动模式，你的自定义view必须实现EasyViewManual协议。如果需要自动模式，你的自定义view则必须实现EasyViewAutomatic协议。)
+
 (see sample Xcode project in `/Demo/MyCusyomView.swift` or `/Demo/EasyPull/DefaultView.swift`)
 
 ## Installation
 
 ### From CocoaPods
-
-### From Carthage
 
 ### Source files
 
