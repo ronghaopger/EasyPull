@@ -60,9 +60,9 @@ Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode
 
 ## Installation
 
-### From CocoaPods
+### CocoaPods
 
-
+pod 'EasyPull', '~> 1.1.0'
 
 ### Source files
 
