@@ -122,6 +122,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     
     // MARK: - EasyViewAutomatic
     public func showAutomaticPulling(progress: CGFloat) {
+        indicatorView.hidden = true
         titleLabel.text = "Pull to load more"
     }
     
