@@ -41,7 +41,7 @@ internal enum EasyState {
 
 public class EasyObserver: NSObject, UIScrollViewDelegate {
     
-// MARK: - constant and veriable and property
+    // MARK: - constant and veriable and property
     private var scrollView: UIScrollView?
     lazy private var dropViewSize: CGSize = CGSizeMake(self.scrollView!.frame.size.width, 60.0)
     lazy private var upViewSize: CGSize = CGSizeMake(self.scrollView!.frame.size.width, 60.0)
@@ -61,7 +61,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             if let view = dropView as? UIView {
                 if view.superview == nil
                     && dropPullEnable {
-                    self.scrollView?.addSubview(view)
+                        self.scrollView?.addSubview(view)
                 }
             }
             return dropView!
@@ -83,7 +83,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             if let view = upViewForManual as? UIView {
                 if view.superview == nil
                     && upPullEnable {
-                    self.scrollView!.addSubview(view)
+                        self.scrollView!.addSubview(view)
                 }
                 view.frame = CGRectMake(0, self.scrollView!.contentSize.height, upViewSize.width, upViewSize.height)
             }
@@ -106,7 +106,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             if let view = upViewForAutomatic as? UIView {
                 if view.superview == nil
                     && upPullEnable {
-                    self.scrollView!.addSubview(view)
+                        self.scrollView!.addSubview(view)
                 }
                 view.frame = CGRectMake(0, self.scrollView!.contentSize.height, upViewSize.width, upViewSize.height)
             }
@@ -133,8 +133,12 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             case .DropPullingOver:
                 DropView.showManualPullingOver()
             case .DropPullingExcuting:
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        self.scrollView!.contentInset = UIEdgeInsets(top: self.dropViewSize.height, left: 0, bottom: 0, right: 0)
+                    })
+                })
                 DropView.showManualExcuting()
-                self.scrollView!.contentInset = UIEdgeInsets(top: dropViewSize.height, left: 0, bottom: 0, right: 0)
                 dropAction?()
             case .UpPulling(let progress):
                 if upPullMode == .EasyUpPullModeAutomatic {
@@ -154,7 +158,11 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 }
             case .UpPullingExcuting:
                 if upPullMode == .EasyUpPullModeManual {
-                    self.scrollView!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewSize.height, right: 0)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        UIView.animateWithDuration(0.2, animations: { () -> Void in
+                            self.scrollView!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.upViewSize.height, right: 0)
+                        })
+                    })
                     UpViewForManual.showManualExcuting()
                     upAction?()
                 }
@@ -168,7 +176,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
         }
     }
     
-// MARK: - life cycle
+    // MARK: - life cycle
     init(scrollView: UIScrollView) {
         super.init()
         
@@ -178,12 +186,12 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
     
     
     
-// MARK: - observer
+    // MARK: - observer
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "contentOffset" {
             switch State {
             case .UpPullingExcuting,
-                .DropPullingExcuting:
+            .DropPullingExcuting:
                 return
             default: break
             }
@@ -213,22 +221,22 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             }
             else if yOffset <= -dropViewSize.height
                 && dropPullEnable {
-                switch State {
-                case .DropPullingOver:
-                    break
-                default:
-                    State = .DropPullingOver
-                }
+                    switch State {
+                    case .DropPullingOver:
+                        break
+                    default:
+                        State = .DropPullingOver
+                    }
             }
             else if yOffset < 0
                 && yOffset > -dropViewSize.height
                 && dropPullEnable {
-                State = .DropPulling(-yOffset / dropViewSize.height)
+                    State = .DropPulling(-yOffset / dropViewSize.height)
             }
         }
     }
-
-// MARK: - UIScrollViewDelegate
+    
+    // MARK: - UIScrollViewDelegate
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         switch State {
         case .DropPullingOver:
@@ -239,10 +247,10 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
         }
     }
     
-// MARK: - private method
-
+    // MARK: - private method
     
-// MARK: - public method
+    
+    // MARK: - public method
     public func stopExcuting() {
         State = .Free
     }
