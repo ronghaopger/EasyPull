@@ -251,4 +251,9 @@ public class EasyObserver: NSObject {
     public func stopExcuting() {
         State = .Free
     }
+    
+    public func triggerDropExcuting() {
+        State = .DropPullingExcuting
+        self.scrollView?.setContentOffset(CGPoint(x: 0, y: -dropViewSize.height), animated: true)
+    }
 }

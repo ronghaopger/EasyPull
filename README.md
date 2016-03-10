@@ -20,6 +20,13 @@ Only support Manual Mode(仅支持手动模式)
  })
 ```
 
+Note: You can trigger drop-excuting directly using this method. (用下面这个方法，你可以直接触发下拉刷新操作)
+
+```Swift
+ func easy_triggerDropExcuting()
+```
+
+
 ### Adding Up Pull to Refresh and Load more (添加上拉加载)
 
 Manual Mode(手动模式)
@@ -67,7 +74,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'EasyPull', '~> 1.0.3'
+pod 'EasyPull', '~> 1.1.0'
 ```
 
 ### Source files

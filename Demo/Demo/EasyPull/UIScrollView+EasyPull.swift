@@ -65,6 +65,12 @@ extension UIScrollView {
     public func easy_stopDropPull() {
         self.Observer.stopExcuting()
     }
+    /**
+     trigger drop Excuting Directly
+     */
+    public func easy_triggerDropExcuting() {
+        self.Observer.triggerDropExcuting()
+    }
     
     /**
      add up pull refresh (Manual Mode)

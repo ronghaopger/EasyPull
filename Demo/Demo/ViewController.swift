@@ -86,12 +86,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     // MARK: - delegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50.0
+        return 40.0
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == 11 {
+            //set Excuting directly
+            tableView.easy_triggerDropExcuting()
+        }
     }
     
     // MARK: - datasource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return 25
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -114,6 +121,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell?.titleLabel?.text = " or set your custom view"
         case 8:
             cell?.titleLabel?.text = " it's easy."
+        case 10:
+            cell?.titleLabel?.text = "                 ____________"
+        case 11:
+            cell?.titleLabel?.text = "                | click here | "
+        case 12:
+            cell?.titleLabel?.text = "                |____________|"
         default:
             cell?.titleLabel?.text = " "
             break
