@@ -17,12 +17,13 @@ extension UIScrollView {
 // MARK: - constant and veriable and property
     private var Observer: EasyObserver {
         get {
-            var obj = objc_getAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver) as? EasyObserver
-            if obj == nil {
-                obj = EasyObserver(scrollView: self)
+            if let obj = objc_getAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver) as? EasyObserver {
+                return obj
+            } else {
+                let obj = EasyObserver(scrollView: self)
                 objc_setAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver, obj, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                return obj
             }
-            return obj!
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -31,18 +32,19 @@ extension UIScrollView {
     
     private var OnceToken: dispatch_once_t {
         get {
-            var token = objc_getAssociatedObject(self, &AssociatedKeys.OnceToken) as? dispatch_once_t
-            if token == nil {
-                token = 0
+            if let token = objc_getAssociatedObject(self, &AssociatedKeys.OnceToken) as? dispatch_once_t {
+                return token
+            } else {
+                let token = 0
                 objc_setAssociatedObject(self, &AssociatedKeys.OnceToken, token, .OBJC_ASSOCIATION_ASSIGN)
+                return token
             }
-            return token!
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.OnceToken, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
     }
-    
+
 // MARK: - public method
     /**
     add drop pull to refresh
