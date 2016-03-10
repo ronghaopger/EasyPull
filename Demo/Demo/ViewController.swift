@@ -98,7 +98,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var cell: MyTableViewCell? = tableView.dequeueReusableCellWithIdentifier("myCell") as? MyTableViewCell
         if (cell == nil) {
             cell = MyTableViewCell(style: .Default, reuseIdentifier: "myCell")
-            cell?.frame = CGRectMake(0, 0, kMainBoundsWidth, 30.0)
         }
         switch indexPath.row {
         case 1:

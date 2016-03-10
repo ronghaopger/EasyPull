@@ -39,12 +39,11 @@ internal enum EasyState {
 }
 
 
-public class EasyObserver: NSObject, UIScrollViewDelegate {
-    
+public class EasyObserver: NSObject {
     // MARK: - constant and veriable and property
     private var scrollView: UIScrollView?
-    lazy private var dropViewSize: CGSize = CGSizeMake(self.scrollView!.frame.size.width, 60.0)
-    lazy private var upViewSize: CGSize = CGSizeMake(self.scrollView!.frame.size.width, 60.0)
+    lazy private var dropViewSize: CGSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 60.0)
+    lazy private var upViewSize: CGSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 60.0)
     
     internal var upPullMode: EasyUpPullMode = .EasyUpPullModeAutomatic
     internal var dropPullEnable: Bool = false
@@ -85,7 +84,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                     && upPullEnable {
                         self.scrollView!.addSubview(view)
                 }
-                view.frame = CGRectMake(0, self.scrollView!.contentSize.height, upViewSize.width, upViewSize.height)
+                view.frame.origin.y = self.scrollView!.contentSize.height
             }
             return upViewForManual!
         }
@@ -108,7 +107,7 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                     && upPullEnable {
                         self.scrollView!.addSubview(view)
                 }
-                view.frame = CGRectMake(0, self.scrollView!.contentSize.height, upViewSize.width, upViewSize.height)
+                view.frame.origin.y = self.scrollView!.contentSize.height
             }
             return upViewForAutomatic!
         }
@@ -181,7 +180,6 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
         super.init()
         
         self.scrollView = scrollView
-        self.scrollView!.delegate = self
     }
     
     
@@ -205,11 +203,16 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 && pullLength >= upViewSize.height
                 && upPullEnable
             {
-                switch State {
-                case .UpPullingOver:
-                    break
-                default:
-                    State = .UpPullingOver
+                if self.scrollView!.dragging {
+                    switch State {
+                    case .UpPullingOver:
+                        break
+                    default:
+                        State = .UpPullingOver
+                    }
+                }
+                else {
+                    State = .UpPullingExcuting
                 }
             }
             else if contentHeight >= frameHeight
@@ -221,11 +224,16 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
             }
             else if yOffset <= -dropViewSize.height
                 && dropPullEnable {
-                    switch State {
-                    case .DropPullingOver:
-                        break
-                    default:
-                        State = .DropPullingOver
+                    if self.scrollView!.dragging {
+                        switch State {
+                        case .DropPullingOver:
+                            break
+                        default:
+                            State = .DropPullingOver
+                        }
+                    }
+                    else {
+                        State = .DropPullingExcuting
                     }
             }
             else if yOffset < 0
@@ -233,17 +241,6 @@ public class EasyObserver: NSObject, UIScrollViewDelegate {
                 && dropPullEnable {
                     State = .DropPulling(-yOffset / dropViewSize.height)
             }
-        }
-    }
-    
-    // MARK: - UIScrollViewDelegate
-    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        switch State {
-        case .DropPullingOver:
-            State = .DropPullingExcuting
-        case .UpPullingOver:
-            State = .UpPullingExcuting
-        default: break
         }
     }
     
