@@ -14,10 +14,10 @@ You have the flexibility to set custom view with fantastic animation.(可以灵�
 Only support Manual Mode(仅支持手动模式)
 
 ```Swift
- tableView.easy_addDropPull({
+ tableView.easy_addDropPull {
      // prepend data to dataSource, insert cells at top of table view
      // call tableView.easy_stopDropPull() when done
- })
+ }
 ```
 
 Note: You can trigger drop-excuting directly using this method. (用下面这个方法，你可以直接触发下拉刷新操作)
@@ -32,19 +32,19 @@ Note: You can trigger drop-excuting directly using this method. (用下面这个
 Manual Mode(手动模式)
 
 ```Swift
- tableView.easy_addUpPullManual({
+ tableView.easy_addUpPullManual {
      // prepend data to dataSource, insert cells at bottom of table view
      // call tableView.easy_stopUpPull() when done
- })
+ }
 ```
 
 Automatic Mode(自动模式)
 
 ```Swift
- tableView.easy_addUpPullAutomatic({
+ tableView.easy_addUpPullAutomatic {
      // prepend data to dataSource, insert cells at bottom of table view
      // call tableView.easy_stopUpPull() when done
- })
+ }
 ```
 
 ### Customization
