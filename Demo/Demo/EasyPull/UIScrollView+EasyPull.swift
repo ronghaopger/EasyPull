@@ -65,7 +65,7 @@ extension UIScrollView {
      stop drop pull
      */
     public func easy_stopDropPull() {
-        self.Observer.stopExcuting()
+        self.Observer.stopDropExcuting()
     }
     /**
      trigger drop Excuting Directly
@@ -110,7 +110,7 @@ extension UIScrollView {
      stop up pull
      */
     public func easy_stopUpPull() {
-        self.Observer.stopExcuting()
+        self.Observer.stopUpExcuting()
     }
     
     

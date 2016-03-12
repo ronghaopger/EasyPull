@@ -26,6 +26,7 @@ public class DefaultDropView: UIView, EasyViewManual {
     
     // MARK: - public method
     public func showManualPulling(progress:CGFloat) {
+        arrowImage.hidden = false
         indicatorView.hidden = true
         titleLabel.text = "Pull to refresh..."
         UIView.animateWithDuration(0.4) { () -> Void in
@@ -47,7 +48,7 @@ public class DefaultDropView: UIView, EasyViewManual {
     }
     
     public func resetManual() {
-        arrowImage.hidden = false
+        arrowImage.hidden = true
         indicatorView.hidden = true
         titleLabel.text = ""
         arrowImage.transform = CGAffineTransformMakeRotation(0);
@@ -61,6 +62,7 @@ public class DefaultDropView: UIView, EasyViewManual {
         height = self.frame.size.height
         
         arrowImage.frame = CGRectMake(width * 0.5 - 50, height * 0.5, 10, 13)
+        arrowImage.hidden = true
         self.addSubview(arrowImage)
         
         indicatorView.frame = CGRectMake(width * 0.5 - 50, height * 0.5, 10, 13)
@@ -114,7 +116,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     }
     
     public func resetManual() {
-        arrowImage.hidden = false
+        arrowImage.hidden = true
         indicatorView.hidden = true
         titleLabel.text = ""
         arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))

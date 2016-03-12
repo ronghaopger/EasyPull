@@ -32,10 +32,11 @@ internal enum EasyState {
     case DropPulling(CGFloat)
     case DropPullingOver
     case DropPullingExcuting
+    case DropPullingFree
     case UpPulling(CGFloat)
     case UpPullingOver
     case UpPullingExcuting
-    case Free
+    case UpPullingFree
 }
 
 
@@ -119,7 +120,7 @@ public class EasyObserver: NSObject {
         }
     }
     
-    private var state: EasyState = .Free
+    private var state: EasyState = .DropPullingFree
     internal var State: EasyState {
         get {
             return state
@@ -134,14 +135,19 @@ public class EasyObserver: NSObject {
             case .DropPullingExcuting:
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        self.scrollView!.contentInset = UIEdgeInsets(top: self.dropViewSize.height, left: 0, bottom: 0, right: 0)
+                        self.scrollView!.contentInset.top = self.dropViewSize.height
                     })
                 })
                 DropView.showManualExcuting()
                 dropAction?()
+            case .DropPullingFree:
+                DropView.resetManual()
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.scrollView!.contentInset.top = 0
+                })
             case .UpPulling(let progress):
                 if upPullMode == .EasyUpPullModeAutomatic {
-                    self.scrollView!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: upViewSize.height, right: 0)
+                    self.scrollView!.contentInset.bottom = upViewSize.height
                     UpViewForAutomatic.showAutomaticPulling(progress)
                 }
                 else {
@@ -159,17 +165,16 @@ public class EasyObserver: NSObject {
                 if upPullMode == .EasyUpPullModeManual {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         UIView.animateWithDuration(0.2, animations: { () -> Void in
-                            self.scrollView!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.upViewSize.height, right: 0)
+                            self.scrollView!.contentInset.bottom = self.upViewSize.height
                         })
                     })
                     UpViewForManual.showManualExcuting()
                     upAction?()
                 }
-            case .Free:
-                DropView.resetManual()
+            case .UpPullingFree:
                 upPullMode == .EasyUpPullModeAutomatic ? UpViewForAutomatic.resetAutomatic() : UpViewForManual.resetManual()
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.scrollView!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                    self.scrollView!.contentInset.bottom = 0
                 })
             }
         }
@@ -248,8 +253,12 @@ public class EasyObserver: NSObject {
     
     
     // MARK: - public method
-    public func stopExcuting() {
-        State = .Free
+    public func stopDropExcuting() {
+        State = .DropPullingFree
+    }
+    
+    public func stopUpExcuting() {
+        State = .UpPullingFree
     }
     
     public func triggerDropExcuting() {
