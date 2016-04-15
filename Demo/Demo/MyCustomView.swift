@@ -15,7 +15,7 @@ public class MyCustomDropView: UIView, EasyViewManual {
     // MARK: - life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.initView()
+        initView()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -42,12 +42,12 @@ public class MyCustomDropView: UIView, EasyViewManual {
     
     // MARK: - private method
     private func initView() {
-        self.backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.whiteColor()
         
-        titleLabel.frame = CGRectMake(self.frame.size.width * 0.5 - 50, self.frame.size.height * 0.5 - 3, 150, 20)
+        titleLabel.frame = CGRectMake(frame.size.width * 0.5 - 50, frame.size.height * 0.5 - 3, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
-        self.addSubview(titleLabel)
+        addSubview(titleLabel)
     }
 }
 
@@ -59,7 +59,7 @@ public class MyCustomUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.initView()
+        initView()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -93,18 +93,22 @@ public class MyCustomUpView: UIView, EasyViewManual, EasyViewAutomatic {
         titleLabel.text = "custom Loading..."
     }
     
+    public func showAutomaticUnable() {
+        titleLabel.text = "Nothing more..."
+    }
+    
     public func resetAutomatic() {
         titleLabel.text = ""
     }
     
     // MARK: - private method
     private func initView() {
-        self.backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.whiteColor()
         
-        titleLabel.frame = CGRectMake(self.frame.size.width * 0.5 - 50, self.frame.size.height * 0.5 - 13, 150, 20)
+        titleLabel.frame = CGRectMake(frame.size.width * 0.5 - 50, frame.size.height * 0.5 - 13, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
-        self.addSubview(titleLabel)
+        addSubview(titleLabel)
     }
 }
 

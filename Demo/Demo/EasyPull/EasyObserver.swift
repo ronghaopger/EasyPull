@@ -19,6 +19,7 @@ public protocol EasyViewManual {
 public protocol EasyViewAutomatic {
     func showAutomaticPulling(progress:CGFloat)
     func showAutomaticExcuting()
+    func showAutomaticUnable()
     func resetAutomatic()
 }
 
@@ -43,8 +44,8 @@ internal enum EasyState {
 public class EasyObserver: NSObject {
     // MARK: - constant and veriable and property
     private var scrollView: UIScrollView?
-    lazy private var dropViewSize: CGSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 60.0)
-    lazy private var upViewSize: CGSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 60.0)
+    lazy private var dropViewSize: CGSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 65.0)
+    lazy private var upViewSize: CGSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 65.0)
     
     internal var upPullMode: EasyUpPullMode = .EasyUpPullModeAutomatic
     internal var dropPullEnable: Bool = false
@@ -61,7 +62,7 @@ public class EasyObserver: NSObject {
             if let view = dropView as? UIView {
                 if view.superview == nil
                     && dropPullEnable {
-                        self.scrollView?.addSubview(view)
+                        scrollView?.addSubview(view)
                 }
             }
             return dropView!
@@ -78,14 +79,14 @@ public class EasyObserver: NSObject {
     internal var UpViewForManual: EasyViewManual {
         get {
             if upViewForManual == nil {
-                upViewForManual = DefaultUpView(frame: CGRectMake(0, self.scrollView!.contentSize.height, upViewSize.width, upViewSize.height))
+                upViewForManual = DefaultUpView(frame: CGRectMake(0, scrollView!.contentSize.height, upViewSize.width, upViewSize.height))
             }
             if let view = upViewForManual as? UIView {
                 if view.superview == nil
                     && upPullEnable {
-                        self.scrollView!.addSubview(view)
+                        scrollView!.addSubview(view)
                 }
-                view.frame.origin.y = self.scrollView!.contentSize.height
+                view.frame.origin.y = scrollView!.contentSize.height
             }
             return upViewForManual!
         }
@@ -101,14 +102,14 @@ public class EasyObserver: NSObject {
     internal var UpViewForAutomatic: EasyViewAutomatic {
         get {
             if upViewForAutomatic == nil {
-                upViewForAutomatic = DefaultUpView(frame: CGRectMake(0, self.scrollView!.contentSize.height, upViewSize.width, upViewSize.height))
+                upViewForAutomatic = DefaultUpView(frame: CGRectMake(0, scrollView!.contentSize.height, upViewSize.width, upViewSize.height))
             }
             if let view = upViewForAutomatic as? UIView {
                 if view.superview == nil
                     && upPullEnable {
-                        self.scrollView!.addSubview(view)
+                        scrollView!.addSubview(view)
                 }
-                view.frame.origin.y = self.scrollView!.contentSize.height
+                view.frame.origin.y = scrollView!.contentSize.height
             }
             return upViewForAutomatic!
         }
@@ -147,7 +148,7 @@ public class EasyObserver: NSObject {
                 })
             case .UpPulling(let progress):
                 if upPullMode == .EasyUpPullModeAutomatic {
-                    self.scrollView!.contentInset.bottom = upViewSize.height
+                    scrollView!.contentInset.bottom = upViewSize.height
                     UpViewForAutomatic.showAutomaticPulling(progress)
                 }
                 else {
@@ -183,7 +184,6 @@ public class EasyObserver: NSObject {
     // MARK: - life cycle
     init(scrollView: UIScrollView) {
         super.init()
-        
         self.scrollView = scrollView
     }
     
@@ -201,14 +201,14 @@ public class EasyObserver: NSObject {
             
             let newPoint = change![NSKeyValueChangeNewKey]?.CGPointValue
             let yOffset = newPoint?.y == nil ? 0 : (newPoint?.y)!
-            let frameHeight = self.scrollView!.frame.size.height
-            let contentHeight = self.scrollView!.contentSize.height
+            let frameHeight = scrollView!.frame.size.height
+            let contentHeight = scrollView!.contentSize.height
             let pullLength = yOffset + frameHeight - contentHeight
             if contentHeight >= frameHeight
                 && pullLength >= upViewSize.height
                 && upPullEnable
             {
-                if self.scrollView!.dragging {
+                if scrollView!.dragging {
                     switch State {
                     case .UpPullingOver:
                         break
@@ -229,7 +229,7 @@ public class EasyObserver: NSObject {
             }
             else if yOffset <= -dropViewSize.height
                 && dropPullEnable {
-                    if self.scrollView!.dragging {
+                    if scrollView!.dragging {
                         switch State {
                         case .DropPullingOver:
                             break
@@ -261,8 +261,19 @@ public class EasyObserver: NSObject {
         State = .UpPullingFree
     }
     
+    public func enableUpExcuting() {
+        upPullEnable = true
+        State = .UpPullingFree
+    }
+    
+    public func unableUpExcuting() {
+        upPullEnable = false
+        UpViewForAutomatic.showAutomaticUnable()
+        scrollView!.contentInset.bottom = self.upViewSize.height
+    }
+    
     public func triggerDropExcuting() {
         State = .DropPullingExcuting
-        self.scrollView?.setContentOffset(CGPoint(x: 0, y: -dropViewSize.height), animated: true)
+        scrollView?.setContentOffset(CGPoint(x: 0, y: -dropViewSize.height), animated: true)
     }
 }

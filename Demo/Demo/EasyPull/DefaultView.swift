@@ -17,7 +17,7 @@ public class DefaultDropView: UIView, EasyViewManual {
     // MARK: - life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.initView()
+        initView()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -56,23 +56,23 @@ public class DefaultDropView: UIView, EasyViewManual {
     
     // MARK: - private method
     private func initView() {
-        self.backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.whiteColor()
         
-        let width = self.frame.size.width,
-        height = self.frame.size.height
+        let width = frame.size.width,
+        height = frame.size.height
         
         arrowImage.frame = CGRectMake(width * 0.5 - 50, height * 0.5, 10, 13)
         arrowImage.hidden = true
-        self.addSubview(arrowImage)
+        addSubview(arrowImage)
         
         indicatorView.frame = CGRectMake(width * 0.5 - 50, height * 0.5, 10, 13)
         indicatorView.startAnimating()
-        self.addSubview(indicatorView)
+        addSubview(indicatorView)
         
         titleLabel.frame = CGRectMake(width * 0.5 - 27, height * 0.5 - 3, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
-        self.addSubview(titleLabel)
+        addSubview(titleLabel)
     }
 }
 
@@ -85,7 +85,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.initView()
+        initView()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -133,6 +133,11 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
         titleLabel.text = "Loading..."
     }
     
+    public func showAutomaticUnable() {
+        indicatorView.hidden = true
+        titleLabel.text = "Nothing more..."
+    }
+    
     public func resetAutomatic() {
         arrowImage.hidden = true
         indicatorView.hidden = true
@@ -141,23 +146,23 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     
     // MARK: - private method
     private func initView() {
-        self.backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.whiteColor()
         
-        let width = self.frame.size.width,
-        height = self.frame.size.height
+        let width = frame.size.width,
+        height = frame.size.height
         
         arrowImage.frame = CGRectMake(width * 0.5 - 50, height * 0.5 - 10, 10, 13)
         arrowImage.hidden = true
         arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        self.addSubview(arrowImage)
+        addSubview(arrowImage)
         
         indicatorView.frame = CGRectMake(width * 0.5 - 50, height * 0.5 - 10, 10, 13)
         indicatorView.startAnimating()
-        self.addSubview(indicatorView)
+        addSubview(indicatorView)
         
         titleLabel.frame = CGRectMake(width * 0.5 - 27, height * 0.5 - 13, 150, 20)
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.textColor = UIColor.blackColor()
-        self.addSubview(titleLabel)
+        addSubview(titleLabel)
     }
 }

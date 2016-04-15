@@ -47,6 +47,13 @@ Automatic Mode(自动模式)
  })
 ```
 
+Note: You can enable/unable Up-Pull using this method. Suitable for scenes without more data (用下面这个方法，你可以启用/禁止上拉加载，适用于**没有更多数据**的场景)
+
+```Swift
+ func enableUpExcuting()
+ func unableUpExcuting()
+```
+
 ### Customization
 
 The pull-to-refresh view can be customized using the following methods:
@@ -74,7 +81,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'EasyPull', '~> 1.1.1'
+pod 'EasyPull', '~> 1.1.2'
 ```
 
 ### Source files

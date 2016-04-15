@@ -17,10 +17,10 @@ class MyTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.backgroundColor = UIColor.lightGrayColor()
+        contentView.backgroundColor = UIColor.lightGrayColor()
         titleLabel = UILabel(frame: CGRectMake(0, 0, kMainBoundsWidth, 30.0))
         titleLabel!.textColor = UIColor.blackColor()
-        self.addSubview(titleLabel!)
+        addSubview(titleLabel!)
     }
 
     required init?(coder aDecoder: NSCoder) {
