@@ -62,7 +62,7 @@ public class EasyObserver: NSObject {
             if let view = dropView as? UIView {
                 if view.superview == nil
                     && dropPullEnable {
-                        scrollView?.addSubview(view)
+                    scrollView?.addSubview(view)
                 }
             }
             return dropView!
@@ -84,7 +84,7 @@ public class EasyObserver: NSObject {
             if let view = upViewForManual as? UIView {
                 if view.superview == nil
                     && upPullEnable {
-                        scrollView!.addSubview(view)
+                    scrollView!.addSubview(view)
                 }
                 view.frame.origin.y = scrollView!.contentSize.height
             }
@@ -107,7 +107,7 @@ public class EasyObserver: NSObject {
             if let view = upViewForAutomatic as? UIView {
                 if view.superview == nil
                     && upPullEnable {
-                        scrollView!.addSubview(view)
+                    scrollView!.addSubview(view)
                 }
                 view.frame.origin.y = scrollView!.contentSize.height
             }
@@ -143,6 +143,7 @@ public class EasyObserver: NSObject {
                 dropAction?()
             case .DropPullingFree:
                 DropView.resetManual()
+                (DropView as! UIView).removeFromSuperview()
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.scrollView!.contentInset.top = 0
                 })
@@ -173,10 +174,17 @@ public class EasyObserver: NSObject {
                     upAction?()
                 }
             case .UpPullingFree:
-                upPullMode == .EasyUpPullModeAutomatic ? UpViewForAutomatic.resetAutomatic() : UpViewForManual.resetManual()
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.scrollView!.contentInset.bottom = 0
-                })
+                if upPullMode == .EasyUpPullModeAutomatic {
+                    UpViewForAutomatic.resetAutomatic()
+                    (UpViewForAutomatic as! UIView).removeFromSuperview()
+                }
+                else {
+                    UpViewForManual.resetManual()
+                    (UpViewForManual as! UIView).removeFromSuperview()
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        self.scrollView!.contentInset.bottom = 0
+                    })
+                }
             }
         }
     }
@@ -194,7 +202,7 @@ public class EasyObserver: NSObject {
         if keyPath == "contentOffset" {
             switch State {
             case .UpPullingExcuting,
-            .DropPullingExcuting:
+                 .DropPullingExcuting:
                 return
             default: break
             }
@@ -229,22 +237,22 @@ public class EasyObserver: NSObject {
             }
             else if yOffset <= -dropViewSize.height
                 && dropPullEnable {
-                    if scrollView!.dragging {
-                        switch State {
-                        case .DropPullingOver:
-                            break
-                        default:
-                            State = .DropPullingOver
-                        }
+                if scrollView!.dragging {
+                    switch State {
+                    case .DropPullingOver:
+                        break
+                    default:
+                        State = .DropPullingOver
                     }
-                    else {
-                        State = .DropPullingExcuting
-                    }
+                }
+                else {
+                    State = .DropPullingExcuting
+                }
             }
             else if yOffset < 0
                 && yOffset > -dropViewSize.height
                 && dropPullEnable {
-                    State = .DropPulling(-yOffset / dropViewSize.height)
+                State = .DropPulling(-yOffset / dropViewSize.height)
             }
         }
     }
