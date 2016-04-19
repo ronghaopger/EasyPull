@@ -66,6 +66,7 @@ public class DefaultDropView: UIView, EasyViewManual {
         addSubview(arrowImage)
         
         indicatorView.frame = CGRectMake(width * 0.5 - 50, height * 0.5, 10, 13)
+        indicatorView.hidesWhenStopped = false
         indicatorView.startAnimating()
         addSubview(indicatorView)
         
@@ -157,6 +158,7 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
         addSubview(arrowImage)
         
         indicatorView.frame = CGRectMake(width * 0.5 - 50, height * 0.5 - 10, 10, 13)
+        indicatorView.hidesWhenStopped = false
         indicatorView.startAnimating()
         addSubview(indicatorView)
         
