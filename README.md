@@ -54,7 +54,7 @@ Note: You can enable/unable Up-Pull using this method. Suitable for scenes witho
  func unableUpExcuting()
 ```
 
-### Customization
+### Customization (自定义)
 
 The pull-to-refresh view can be customized using the following methods:
 
@@ -72,6 +72,17 @@ Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode
 
 (see sample Xcode project in `/Demo/MyCusyomView.swift` or `/Demo/EasyPull/DefaultView.swift`)
 
+
+### Note (注意)
+
+释放所有的Action，避免循环引用cycle retain。
+
+```Swift
+ func easy_releaseAll()
+```
+
+当App要离开某一个使用了EasyPull的viewController时，记得releaseAll哦
+
 ## Installation
 
 ### CocoaPods
@@ -81,7 +92,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'EasyPull', '~> 1.1.3'
+pod 'EasyPull', '~> 1.1.4'
 ```
 
 ### Source files

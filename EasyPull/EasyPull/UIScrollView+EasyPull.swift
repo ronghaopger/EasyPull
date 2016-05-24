@@ -109,6 +109,13 @@ extension UIScrollView {
         Observer.unableUpExcuting()
     }
     
+    /**
+     release all of action
+     */
+    public func easy_releaseAll() {
+        Observer.dropAction = nil
+        Observer.upAction = nil
+    }
     
 // MARK: private method
     private func addContentOffsetObserver() {
