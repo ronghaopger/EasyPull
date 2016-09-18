@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "EasyPull"
-  s.version = "2.0.0"
+  s.version = "3.0.0"
   s.summary = "Let pull-to-refresh Easy for any UIScrollView in Swift"
   s.homepage = "https://github.com/ronghaopger/EasyPull"
   s.license = "MIT"

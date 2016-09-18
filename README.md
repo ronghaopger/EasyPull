@@ -86,7 +86,7 @@ Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode
 ## Requirements
 
 - iOS 8.0+
-- Swift 3.0 (EasyPull 2.x), Swift 2.x (EasyPull 1.x)
+- Swift 3.0 (EasyPull 3.x), Swift 2.x (EasyPull 1.x)
 
 The main development of EasyPull is based on Swift 3.
 
@@ -99,7 +99,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'EasyPull', '~> 2.0.0'
+pod 'EasyPull', '~> 3.0.0'
 ```
 
 ### Source files
