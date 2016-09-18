@@ -8,10 +8,10 @@
 
 import UIKit
 
-public class DefaultDropView: UIView, EasyViewManual {
+open class DefaultDropView: UIView, EasyViewManual {
     // MARK: - constant and veriable and property
-    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png", inBundle: NSBundle(forClass: DefaultDropView.self), compatibleWithTraitCollection: nil))
-    let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png", in: Bundle(for: DefaultDropView.self), compatibleWith: nil))
+    let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     let titleLabel:UILabel = UILabel()
     
     // MARK: - life cycle
@@ -25,62 +25,62 @@ public class DefaultDropView: UIView, EasyViewManual {
     }
     
     // MARK: - public method
-    public func showManualPulling(progress:CGFloat) {
-        arrowImage.hidden = false
-        indicatorView.hidden = true
+    open func showManualPulling(_ progress:CGFloat) {
+        arrowImage.isHidden = false
+        indicatorView.isHidden = true
         titleLabel.text = "Pull to refresh..."
-        UIView.animateWithDuration(0.4) { () -> Void in
-            self.arrowImage.transform = CGAffineTransformMakeRotation(0);
-        }
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.arrowImage.transform = CGAffineTransform(rotationAngle: 0);
+        }) 
     }
     
-    public func showManualPullingOver() {
+    open func showManualPullingOver() {
         titleLabel.text = "Release to refresh..."
-        UIView.animateWithDuration(0.4) { () -> Void in
-            self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
-        }
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI));
+        }) 
     }
     
-    public func showManualExcuting() {
-        arrowImage.hidden = true
-        indicatorView.hidden = false
+    open func showManualExcuting() {
+        arrowImage.isHidden = true
+        indicatorView.isHidden = false
         titleLabel.text = "Loading..."
     }
     
-    public func resetManual() {
-        arrowImage.hidden = true
-        indicatorView.hidden = true
+    open func resetManual() {
+        arrowImage.isHidden = true
+        indicatorView.isHidden = true
         titleLabel.text = ""
-        arrowImage.transform = CGAffineTransformMakeRotation(0);
+        arrowImage.transform = CGAffineTransform(rotationAngle: 0);
     }
     
     // MARK: - private method
-    private func initView() {
-        backgroundColor = UIColor.whiteColor()
+    fileprivate func initView() {
+        backgroundColor = UIColor.white
         
         let width = frame.size.width,
         height = frame.size.height
         
-        arrowImage.frame = CGRectMake(width * 0.5 - 50, height * 0.5, 10, 13)
-        arrowImage.hidden = true
+        arrowImage.frame = CGRect(x: width * 0.5 - 50, y: height * 0.5, width: 10, height: 13)
+        arrowImage.isHidden = true
         addSubview(arrowImage)
         
-        indicatorView.frame = CGRectMake(width * 0.5 - 50, height * 0.5, 10, 13)
+        indicatorView.frame = CGRect(x: width * 0.5 - 50, y: height * 0.5, width: 10, height: 13)
         indicatorView.hidesWhenStopped = false
         indicatorView.startAnimating()
         addSubview(indicatorView)
         
-        titleLabel.frame = CGRectMake(width * 0.5 - 27, height * 0.5 - 3, 150, 20)
-        titleLabel.font = UIFont.systemFontOfSize(14.0)
-        titleLabel.textColor = UIColor.blackColor()
+        titleLabel.frame = CGRect(x: width * 0.5 - 27, y: height * 0.5 - 3, width: 150, height: 20)
+        titleLabel.font = UIFont.systemFont(ofSize: 14.0)
+        titleLabel.textColor = UIColor.black
         addSubview(titleLabel)
     }
 }
 
-public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
+open class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - constant and veriable and property
-    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png", inBundle: NSBundle(forClass: DefaultDropView.self), compatibleWithTraitCollection: nil))
-    let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    let arrowImage:UIImageView = UIImageView(image: UIImage(named: "icon_arrow.png", in: Bundle(for: DefaultDropView.self), compatibleWith: nil))
+    let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     let titleLabel:UILabel = UILabel()
     
     // MARK: - life cycle
@@ -94,77 +94,77 @@ public class DefaultUpView: UIView, EasyViewManual, EasyViewAutomatic {
     }
     
     // MARK: - EasyViewManual
-    public func showManualPulling(progress:CGFloat) {
-        arrowImage.hidden = false
-        indicatorView.hidden = true
+    open func showManualPulling(_ progress:CGFloat) {
+        arrowImage.isHidden = false
+        indicatorView.isHidden = true
         titleLabel.text = "Pull to load more..."
-        UIView.animateWithDuration(0.4) { () -> Void in
-            self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
-        }
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI));
+        }) 
     }
     
-    public func showManualPullingOver() {
+    open func showManualPullingOver() {
         titleLabel.text = "Release to load more..."
-        UIView.animateWithDuration(0.4) { () -> Void in
-            self.arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 2));
-        }
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI * 2));
+        }) 
     }
     
-    public func showManualExcuting() {
-        arrowImage.hidden = true
-        indicatorView.hidden = false
+    open func showManualExcuting() {
+        arrowImage.isHidden = true
+        indicatorView.isHidden = false
         titleLabel.text = "Loading..."
     }
     
-    public func resetManual() {
-        arrowImage.hidden = true
-        indicatorView.hidden = true
+    open func resetManual() {
+        arrowImage.isHidden = true
+        indicatorView.isHidden = true
         titleLabel.text = ""
-        arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
     }
     
     // MARK: - EasyViewAutomatic
-    public func showAutomaticPulling(progress: CGFloat) {
-        indicatorView.hidden = true
+    open func showAutomaticPulling(_ progress: CGFloat) {
+        indicatorView.isHidden = true
         titleLabel.text = "Pull to load more"
     }
     
-    public func showAutomaticExcuting() {
-        indicatorView.hidden = false
+    open func showAutomaticExcuting() {
+        indicatorView.isHidden = false
         titleLabel.text = "Loading..."
     }
     
-    public func showAutomaticUnable() {
-        indicatorView.hidden = true
+    open func showAutomaticUnable() {
+        indicatorView.isHidden = true
         titleLabel.text = "Nothing more..."
     }
     
-    public func resetAutomatic() {
-        arrowImage.hidden = true
-        indicatorView.hidden = true
+    open func resetAutomatic() {
+        arrowImage.isHidden = true
+        indicatorView.isHidden = true
         titleLabel.text = ""
     }
     
     // MARK: - private method
-    private func initView() {
-        backgroundColor = UIColor.whiteColor()
+    fileprivate func initView() {
+        backgroundColor = UIColor.white
         
         let width = frame.size.width,
         height = frame.size.height
         
-        arrowImage.frame = CGRectMake(width * 0.5 - 50, height * 0.5 - 10, 10, 13)
-        arrowImage.hidden = true
-        arrowImage.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        arrowImage.frame = CGRect(x: width * 0.5 - 50, y: height * 0.5 - 10, width: 10, height: 13)
+        arrowImage.isHidden = true
+        arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
         addSubview(arrowImage)
         
-        indicatorView.frame = CGRectMake(width * 0.5 - 50, height * 0.5 - 10, 10, 13)
+        indicatorView.frame = CGRect(x: width * 0.5 - 50, y: height * 0.5 - 10, width: 10, height: 13)
         indicatorView.hidesWhenStopped = false
         indicatorView.startAnimating()
         addSubview(indicatorView)
         
-        titleLabel.frame = CGRectMake(width * 0.5 - 27, height * 0.5 - 13, 150, 20)
-        titleLabel.font = UIFont.systemFontOfSize(14.0)
-        titleLabel.textColor = UIColor.blackColor()
+        titleLabel.frame = CGRect(x: width * 0.5 - 27, y: height * 0.5 - 13, width: 150, height: 20)
+        titleLabel.font = UIFont.systemFont(ofSize: 14.0)
+        titleLabel.textColor = UIColor.black
         addSubview(titleLabel)
     }
 }

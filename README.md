@@ -83,6 +83,13 @@ Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode
 
 当App要离开某一个使用了EasyPull的viewController时，记得releaseAll哦
 
+## Requirements
+
+- iOS 8.0+
+- Swift 3.0 (EasyPull 2.x), Swift 2.x (EasyPull 1.x)
+
+The main development of EasyPull is based on Swift 3.
+
 ## Installation
 
 ### CocoaPods
@@ -92,7 +99,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'EasyPull', '~> 1.1.4'
+pod 'EasyPull', '~> 2.0.0'
 ```
 
 ### Source files

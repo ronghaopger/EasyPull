@@ -10,12 +10,12 @@ import UIKit
 
 extension UIScrollView {
 // MARK: - associateKeys
-    private struct AssociatedKeys {
+    fileprivate struct AssociatedKeys {
         static var ContentOffsetObserver = "easy_ContentOffsetObserver"
         static var OnceToken = "easy_OnceToken"
     }
 // MARK: - constant and veriable and property
-    private var Observer: EasyObserver {
+    fileprivate var Observer: EasyObserver {
         get {
             if let obj = objc_getAssociatedObject(self, &AssociatedKeys.ContentOffsetObserver) as? EasyObserver {
                 return obj
@@ -34,7 +34,7 @@ extension UIScrollView {
     - parameter action:         excuting action
     - parameter customDropView: custom view(need to implement the EasyViewManual protocol). default is nil.
     */
-    public func easy_addDropPull(action: (() ->Void), customDropView: EasyViewManual? = nil) {
+    public func easy_addDropPull(_ action: @escaping (() ->Void), customDropView: EasyViewManual? = nil) {
         Observer.dropPullEnable = true
         Observer.dropAction = action
         if let view = customDropView {
@@ -62,9 +62,9 @@ extension UIScrollView {
      - parameter action:       excuting action
      - parameter customUpView: custom view(need to implement the EasyViewManual protocol). default is nil.
      */
-    public func easy_addUpPullManual(action: (() ->Void), customUpView: EasyViewManual? = nil) {
+    public func easy_addUpPullManual(_ action: @escaping (() ->Void), customUpView: EasyViewManual? = nil) {
         Observer.upPullEnable = true
-        Observer.upPullMode = .EasyUpPullModeManual
+        Observer.upPullMode = .easyUpPullModeManual
         Observer.upAction = action
         if let view = customUpView {
             Observer.UpViewForManual = view
@@ -78,9 +78,9 @@ extension UIScrollView {
      - parameter action:       excuting action
      - parameter customUpView: custom view(need to implement the EasyViewAutomatic protocol). default is nil.
      */
-    public func easy_addUpPullAutomatic(action: (() ->Void), customUpView: EasyViewAutomatic? = nil) {
+    public func easy_addUpPullAutomatic(_ action: @escaping (() ->Void), customUpView: EasyViewAutomatic? = nil) {
         Observer.upPullEnable = true
-        Observer.upPullMode = .EasyUpPullModeAutomatic
+        Observer.upPullMode = .easyUpPullModeAutomatic
         Observer.upAction = action
         if let view = customUpView {
             Observer.UpViewForAutomatic = view
@@ -118,10 +118,10 @@ extension UIScrollView {
     }
     
 // MARK: private method
-    private func addContentOffsetObserver() {
+    fileprivate func addContentOffsetObserver() {
         guard objc_getAssociatedObject(self, &AssociatedKeys.OnceToken) == nil else { return }
         
         objc_setAssociatedObject(self, &AssociatedKeys.OnceToken, "Runed", .OBJC_ASSOCIATION_RETAIN)
-        addObserver(Observer, forKeyPath: "contentOffset", options: .New, context: nil)
+        addObserver(Observer, forKeyPath: "contentOffset", options: .new, context: nil)
     }
 }

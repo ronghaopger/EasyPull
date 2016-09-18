@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MyCustomDropView: UIView, EasyViewManual {
+open class MyCustomDropView: UIView, EasyViewManual {
     // MARK: - constant and veriable and property
     let titleLabel:UILabel = UILabel()
     
@@ -23,36 +23,36 @@ public class MyCustomDropView: UIView, EasyViewManual {
     }
     
     // MARK: - public method
-    public func showManualPulling(progress:CGFloat) {
+    open func showManualPulling(_ progress:CGFloat) {
         titleLabel.text = "custom Pull..."
         NSLog("%f", progress)
     }
     
-    public func showManualPullingOver() {
+    open func showManualPullingOver() {
         titleLabel.text = "custom Release..."
     }
     
-    public func showManualExcuting() {
+    open func showManualExcuting() {
         titleLabel.text = "custom Loading..."
     }
     
-    public func resetManual() {
+    open func resetManual() {
         titleLabel.text = ""
     }
     
     // MARK: - private method
-    private func initView() {
-        backgroundColor = UIColor.whiteColor()
+    fileprivate func initView() {
+        backgroundColor = UIColor.white
         
-        titleLabel.frame = CGRectMake(frame.size.width * 0.5 - 50, frame.size.height * 0.5 - 3, 150, 20)
-        titleLabel.font = UIFont.systemFontOfSize(14.0)
-        titleLabel.textColor = UIColor.blackColor()
+        titleLabel.frame = CGRect(x: frame.size.width * 0.5 - 50, y: frame.size.height * 0.5 - 3, width: 150, height: 20)
+        titleLabel.font = UIFont.systemFont(ofSize: 14.0)
+        titleLabel.textColor = UIColor.black
         addSubview(titleLabel)
     }
 }
 
 
-public class MyCustomUpView: UIView, EasyViewManual, EasyViewAutomatic {
+open class MyCustomUpView: UIView, EasyViewManual, EasyViewAutomatic {
     // MARK: - constant and veriable and property
     let titleLabel:UILabel = UILabel()
     
@@ -67,47 +67,47 @@ public class MyCustomUpView: UIView, EasyViewManual, EasyViewAutomatic {
     }
     
     // MARK: - EasyViewManual
-    public func showManualPulling(progress:CGFloat) {
+    open func showManualPulling(_ progress:CGFloat) {
         titleLabel.text = "custom Pull..."
         NSLog("%f", progress)
     }
     
-    public func showManualPullingOver() {
+    open func showManualPullingOver() {
         titleLabel.text = "custom Release..."
     }
     
-    public func showManualExcuting() {
+    open func showManualExcuting() {
         titleLabel.text = "custom Loading..."
     }
     
-    public func resetManual() {
+    open func resetManual() {
         titleLabel.text = ""
     }
     
     // MARK: - EasyViewAutomatic
-    public func showAutomaticPulling(progress: CGFloat) {
+    open func showAutomaticPulling(_ progress: CGFloat) {
         titleLabel.text = "custom Pull"
     }
     
-    public func showAutomaticExcuting() {
+    open func showAutomaticExcuting() {
         titleLabel.text = "custom Loading..."
     }
     
-    public func showAutomaticUnable() {
+    open func showAutomaticUnable() {
         titleLabel.text = "Nothing more..."
     }
     
-    public func resetAutomatic() {
+    open func resetAutomatic() {
         titleLabel.text = ""
     }
     
     // MARK: - private method
-    private func initView() {
-        backgroundColor = UIColor.whiteColor()
+    fileprivate func initView() {
+        backgroundColor = UIColor.white
         
-        titleLabel.frame = CGRectMake(frame.size.width * 0.5 - 50, frame.size.height * 0.5 - 13, 150, 20)
-        titleLabel.font = UIFont.systemFontOfSize(14.0)
-        titleLabel.textColor = UIColor.blackColor()
+        titleLabel.frame = CGRect(x: frame.size.width * 0.5 - 50, y: frame.size.height * 0.5 - 13, width: 150, height: 20)
+        titleLabel.font = UIFont.systemFont(ofSize: 14.0)
+        titleLabel.textColor = UIColor.black
         addSubview(titleLabel)
     }
 }

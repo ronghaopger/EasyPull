@@ -10,19 +10,19 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
-    let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
+    let kMainBoundsWidth = UIScreen.main.bounds.size.width
+    let kMainBoundsHeight = UIScreen.main.bounds.size.height
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tableView = UITableView(frame: CGRectMake(0, 0, kMainBoundsWidth, kMainBoundsHeight))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: kMainBoundsWidth, height: kMainBoundsHeight))
         tableView.delegate = self
         tableView.dataSource = self
         
         
         func delayStopDrop() {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: { () -> Void in
                 tableView.reloadData()
                 tableView.easy_stopDropPull()
             })
@@ -42,7 +42,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
         func delayStopUp() {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: { () -> Void in
                 tableView.reloadData()
                 tableView.easy_stopUpPull()
             })
@@ -85,28 +85,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     // MARK: - delegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40.0
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 11 {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).row == 11 {
             //set Excuting directly
             tableView.easy_triggerDropExcuting()
         }
     }
     
     // MARK: - datasource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: MyTableViewCell? = tableView.dequeueReusableCellWithIdentifier("myCell") as? MyTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: MyTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "myCell") as? MyTableViewCell
         if (cell == nil) {
-            cell = MyTableViewCell(style: .Default, reuseIdentifier: "myCell")
+            cell = MyTableViewCell(style: .default, reuseIdentifier: "myCell")
         }
-        switch indexPath.row {
+        switch (indexPath as NSIndexPath).row {
         case 1:
             cell?.titleLabel?.text = " pull-to-refresh have two mode:"
         case 2:

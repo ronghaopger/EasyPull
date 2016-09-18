@@ -10,16 +10,16 @@ import UIKit
 
 class MyTableViewCell: UITableViewCell {
     
-    let kMainBoundsWidth = UIScreen.mainScreen().bounds.size.width
-    let kMainBoundsHeight = UIScreen.mainScreen().bounds.size.height
+    let kMainBoundsWidth = UIScreen.main.bounds.size.width
+    let kMainBoundsHeight = UIScreen.main.bounds.size.height
     
     var titleLabel: UILabel?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = UIColor.lightGrayColor()
-        titleLabel = UILabel(frame: CGRectMake(0, 0, kMainBoundsWidth, 30.0))
-        titleLabel!.textColor = UIColor.blackColor()
+        contentView.backgroundColor = UIColor.lightGray
+        titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: kMainBoundsWidth, height: 30.0))
+        titleLabel!.textColor = UIColor.black
         addSubview(titleLabel!)
     }
 
