@@ -14,16 +14,16 @@ You have the flexibility to set custom view with fantastic animation.(可以灵�
 Only support Manual Mode(仅支持手动模式)
 
 ```Swift
- tableView.easy_addDropPull({
+ tableView.easy.addDropPull(with: {
      // prepend data to dataSource, insert cells at top of table view
-     // call tableView.easy_stopDropPull() when done
+     // call tableView.easy.stopDropPull() when done
  })
 ```
 
 Note: You can trigger drop-excuting directly using this method. (用下面这个方法，你可以直接触发下拉刷新操作)
 
 ```Swift
- func easy_triggerDropExcuting()
+ func triggerDropExcuting()
 ```
 
 
@@ -32,26 +32,26 @@ Note: You can trigger drop-excuting directly using this method. (用下面这个
 Manual Mode(手动模式)
 
 ```Swift
- tableView.easy_addUpPullManual({
+ tableView.easy.addUpPullManual(with: {
      // prepend data to dataSource, insert cells at bottom of table view
-     // call tableView.easy_stopUpPull() when done
+     // call tableView.easy.stopUpPull() when done
  })
 ```
 
 Automatic Mode(自动模式)
 
 ```Swift
- tableView.easy_addUpPullAutomatic({
+ tableView.easy.addUpPullAutomatic(with: {
      // prepend data to dataSource, insert cells at bottom of table view
-     // call tableView.easy_stopUpPull() when done
+     // call tableView.easy.stopUpPull() when done
  })
 ```
 
 Note: You can enable/unable Up-Pull using this method. Suitable for scenes without more data (用下面这个方法，你可以启用/禁止上拉加载，适用于**没有更多数据**的场景)
 
 ```Swift
- func enableUpExcuting()
- func unableUpExcuting()
+ func enableUpPull()
+ func unableUpPull()
 ```
 
 ### Customization (自定义)
@@ -59,9 +59,9 @@ Note: You can enable/unable Up-Pull using this method. Suitable for scenes witho
 The pull-to-refresh view can be customized using the following methods:
 
 ```Swift
- func easy_addDropPull(action: (() ->Void), customDropView: EasyViewManual? = nil)
- func easy_addUpPullManual(action: (() ->Void), customUpView: EasyViewManual? = nil)
- func easy_addUpPullAutomatic(action: (() ->Void), customUpView: EasyViewAutomatic? = nil)
+ func addDropPull(with action: (() ->Void), customDropView: EasyViewManual? = nil)
+ func addUpPullManual(with action: (() ->Void), customUpView: EasyViewManual? = nil)
+ func addUpPullAutomatic(with action: (() ->Void), customUpView: EasyViewAutomatic? = nil)
 ```
 
 **NOTE:** Your custom views must implement the `EasyViewManual` protocol when you prefer the Manual mode 
@@ -78,7 +78,7 @@ Or implement the `EasyViewAutomatic` protocol when you prefer the Automatic mode
 释放所有的Action，避免循环引用cycle retain。
 
 ```Swift
- func easy_releaseAll()
+ func releaseAll()
 ```
 
 当App要离开某一个使用了EasyPull的viewController时，记得releaseAll哦

@@ -20,60 +20,61 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         
-        
         func delayStopDrop() {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: { () -> Void in
+            let deadline = DispatchTime.now() + DispatchTimeInterval.seconds(1)
+            DispatchQueue.main.asyncAfter(deadline: deadline) { 
                 tableView.reloadData()
-                tableView.easy_stopDropPull()
-            })
+                tableView.easy.stopDropPull()
+            }
         }
         //drop pull
         //default view
-        tableView.easy_addDropPull({
+        tableView.easy.addDropPull(with: {
             NSLog("Run")
             delayStopDrop()
         })
         //custom view
-//        tableView.easy_addDropPull({
+//        tableView.easy.addDropPull(with: {
 //            NSLog("custom Run")
 //            delayStopDrop()
-//        }, customDropView: MyCustomDropView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
+//        }, customDropView: MyCustomDropView(frame: CGRect(x: 0, y: -60, width: kMainBoundsWidth, height: 60)))
+        
+        
         
         
         
         func delayStopUp() {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: { () -> Void in
+            let deadline = DispatchTime.now() + DispatchTimeInterval.seconds(1)
+            DispatchQueue.main.asyncAfter(deadline: deadline) {
                 tableView.reloadData()
-                tableView.easy_stopUpPull()
-            })
+                tableView.easy.stopUpPull()
+            }
         }
         //up pull
-        //default view
-        //Manual mode
-//        tableView.easy_addUpPullManual({
+        //default view (Manual mode)
+//        tableView.easy.addUpPullManual(with: {
 //            NSLog("Run")
 //            delayStopUp()
 //        })
 
-        //Automatic mode
-        tableView.easy_addUpPullAutomatic({
+        //default view (Automatic mode)
+        tableView.easy.addUpPullAutomatic(with: {
             NSLog("Run")
             delayStopUp()
         })
         
-        //custom view
-        //Manual mode
-//        tableView.easy_addUpPullManual({
-//            NSLog("custom Run")
-//            delayStopUp()
-//        }, customUpView: MyCustomUpView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
-    
-        //Automatic mode
-//        tableView.easy_addUpPullAutomatic({
-//            NSLog("custom Run")
-//            delayStopUp()
-//        }, customUpView: MyCustomUpView(frame: CGRectMake(0, -60, kMainBoundsWidth, 60)))
         
+        //custom view (Manual mode)
+//        tableView.easy.addUpPullManual(with: {
+//            NSLog("custom Run")
+//            delayStopUp()
+//        }, customUpView: MyCustomUpView(frame: CGRect(x: 0, y: -60, width: kMainBoundsWidth, height: 60)))
+    
+        //custom view (Automatic mode)
+//        tableView.easy.addUpPullAutomatic(with: {
+//            NSLog("custom Run")
+//            delayStopUp()
+//        }, customUpView: MyCustomUpView(frame: CGRect(x: 0, y: -60, width: kMainBoundsWidth, height: 60)))
         
         
         self.view.addSubview(tableView)
@@ -92,7 +93,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath as NSIndexPath).row == 11 {
             //set Excuting directly
-            tableView.easy_triggerDropExcuting()
+            tableView.easy.triggerDropExcuting()
         }
     }
     

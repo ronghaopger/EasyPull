@@ -43,9 +43,9 @@ internal enum EasyState {
 
 open class EasyObserver: NSObject {
     // MARK: - constant and veriable and property
-    fileprivate var scrollView: UIScrollView?
-    lazy fileprivate var dropViewSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 65.0)
-    lazy fileprivate var upViewSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 65.0)
+    private var scrollView: UIScrollView?
+    lazy private var dropViewSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 65.0)
+    lazy private var upViewSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 65.0)
     
     internal var upPullMode: EasyUpPullMode = .easyUpPullModeAutomatic
     internal var dropPullEnable: Bool = false
@@ -53,7 +53,7 @@ open class EasyObserver: NSObject {
     internal var dropAction: (() ->Void)?
     internal var upAction: (() ->Void)?
     
-    fileprivate var dropView: EasyViewManual?
+    private var dropView: EasyViewManual?
     internal var DropView: EasyViewManual {
         get {
             if dropView == nil {
@@ -75,7 +75,7 @@ open class EasyObserver: NSObject {
         }
     }
     
-    fileprivate var upViewForManual: EasyViewManual?
+    private var upViewForManual: EasyViewManual?
     internal var UpViewForManual: EasyViewManual {
         get {
             if upViewForManual == nil {
@@ -98,7 +98,7 @@ open class EasyObserver: NSObject {
         }
     }
     
-    fileprivate var upViewForAutomatic: EasyViewAutomatic?
+    private var upViewForAutomatic: EasyViewAutomatic?
     internal var UpViewForAutomatic: EasyViewAutomatic {
         get {
             if upViewForAutomatic == nil {
@@ -121,7 +121,7 @@ open class EasyObserver: NSObject {
         }
     }
     
-    fileprivate var state: EasyState = .dropPullingFree
+    private var state: EasyState = .dropPullingFree
     internal var State: EasyState {
         get {
             return state

@@ -12,6 +12,7 @@
 		1454C8991C7B087800BDCC66 /* EasyPullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1454C8981C7B087800BDCC66 /* EasyPullTests.swift */; };
 		14E05C9E1C7F4B8C0014FFEB /* EasyObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E05C9C1C7F4B8C0014FFEB /* EasyObserver.swift */; };
 		14E05C9F1C7F4B8C0014FFEB /* UIScrollView+EasyPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E05C9D1C7F4B8C0014FFEB /* UIScrollView+EasyPull.swift */; };
+		14E084E81DB4B7F300894C9A /* EasyPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E084E71DB4B7F300894C9A /* EasyPull.swift */; };
 		14EDD3691C898C65001A6DE4 /* DefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EDD3681C898C65001A6DE4 /* DefaultView.swift */; };
 		14EDD36E1C898C8B001A6DE4 /* icon_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 14EDD36B1C898C8B001A6DE4 /* icon_arrow.png */; };
 		14EDD36F1C898C8B001A6DE4 /* icon_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14EDD36C1C898C8B001A6DE4 /* icon_arrow@2x.png */; };
@@ -37,6 +38,7 @@
 		1454C89A1C7B087800BDCC66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14E05C9C1C7F4B8C0014FFEB /* EasyObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyObserver.swift; sourceTree = "<group>"; };
 		14E05C9D1C7F4B8C0014FFEB /* UIScrollView+EasyPull.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+EasyPull.swift"; sourceTree = "<group>"; };
+		14E084E71DB4B7F300894C9A /* EasyPull.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyPull.swift; sourceTree = "<group>"; };
 		14EDD3681C898C65001A6DE4 /* DefaultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultView.swift; sourceTree = "<group>"; };
 		14EDD36B1C898C8B001A6DE4 /* icon_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow.png; sourceTree = "<group>"; };
 		14EDD36C1C898C8B001A6DE4 /* icon_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_arrow@2x.png"; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				14EDD36A1C898C6D001A6DE4 /* Resource */,
 				1454C88C1C7B087800BDCC66 /* EasyPull.h */,
 				14E05C9D1C7F4B8C0014FFEB /* UIScrollView+EasyPull.swift */,
+				14E084E71DB4B7F300894C9A /* EasyPull.swift */,
 				14E05C9C1C7F4B8C0014FFEB /* EasyObserver.swift */,
 				14EDD3681C898C65001A6DE4 /* DefaultView.swift */,
 				1454C88E1C7B087800BDCC66 /* Info.plist */,
@@ -225,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14E084E81DB4B7F300894C9A /* EasyPull.swift in Sources */,
 				14E05C9F1C7F4B8C0014FFEB /* UIScrollView+EasyPull.swift in Sources */,
 				14E05C9E1C7F4B8C0014FFEB /* EasyObserver.swift in Sources */,
 				14EDD3691C898C65001A6DE4 /* DefaultView.swift in Sources */,

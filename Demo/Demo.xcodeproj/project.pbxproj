@@ -18,6 +18,7 @@
 		1454C8B71C7B097C00BDCC66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1454C8B61C7B097C00BDCC66 /* Assets.xcassets */; };
 		1454C8BA1C7B097C00BDCC66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1454C8B81C7B097C00BDCC66 /* LaunchScreen.storyboard */; };
 		14CF9C111C7B127900EB5C00 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CF9C101C7B127900EB5C00 /* MyTableViewCell.swift */; };
+		14E084E61DB4A93300894C9A /* EasyPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E084E51DB4A93300894C9A /* EasyPull.swift */; };
 		14EDD3651C896D04001A6DE4 /* MyCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EDD3641C896D03001A6DE4 /* MyCustomView.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		1454C8B91C7B097C00BDCC66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1454C8BB1C7B097C00BDCC66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14CF9C101C7B127900EB5C00 /* MyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
+		14E084E51DB4A93300894C9A /* EasyPull.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyPull.swift; sourceTree = "<group>"; };
 		14EDD3641C896D03001A6DE4 /* MyCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCustomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,9 +55,10 @@
 			isa = PBXGroup;
 			children = (
 				143A5F111C8EA52100AC2257 /* Resource */,
-				143A5F091C8EA4A300AC2257 /* DefaultView.swift */,
-				143A5F0A1C8EA4A300AC2257 /* EasyObserver.swift */,
 				143A5F0B1C8EA4A300AC2257 /* UIScrollView+EasyPull.swift */,
+				14E084E51DB4A93300894C9A /* EasyPull.swift */,
+				143A5F0A1C8EA4A300AC2257 /* EasyObserver.swift */,
+				143A5F091C8EA4A300AC2257 /* DefaultView.swift */,
 			);
 			path = EasyPull;
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 					1454C8AB1C7B097C00BDCC66 = {
 						CreatedOnToolsVersion = 7.2.1;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -177,6 +181,7 @@
 			files = (
 				14EDD3651C896D04001A6DE4 /* MyCustomView.swift in Sources */,
 				1454C8B21C7B097C00BDCC66 /* ViewController.swift in Sources */,
+				14E084E61DB4A93300894C9A /* EasyPull.swift in Sources */,
 				1454C8B01C7B097C00BDCC66 /* AppDelegate.swift in Sources */,
 				143A5F0D1C8EA4A300AC2257 /* EasyObserver.swift in Sources */,
 				143A5F0E1C8EA4A300AC2257 /* UIScrollView+EasyPull.swift in Sources */,
@@ -284,10 +289,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rh.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rh.EasyPull;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -296,10 +305,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rh.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rh.EasyPull;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
